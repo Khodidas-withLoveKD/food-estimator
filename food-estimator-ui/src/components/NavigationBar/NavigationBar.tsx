@@ -35,30 +35,25 @@ const NavigationBar = () => {
     const menuItemCss = {
       color: colors.menuFontColor,
       cursor: 'pointer',
-      '&:hover': {
-        textDecoration: 'underline',
-        textDecorationColor: colors.menuFontColor,
-        backgroundColor: 'black'
-      }
     }
     
     const menuOfTheWeek = () => {
       return(
-        <span className='menu-item'>
+        <span className='menu-item' style={menuItemCss}>
           menu of the week
         </span>
       )
     }
     const goingToEat = () => {
       return(
-        <span className='menu-item'>
+        <span className='menu-item' style={menuItemCss}>
           goingToEat
         </span>
       )
     }
     const topFoods = () => {
       return(
-        <span className='menu-item'>
+        <span className='menu-item' style={menuItemCss}>
           topFoods
         </span>
       )
