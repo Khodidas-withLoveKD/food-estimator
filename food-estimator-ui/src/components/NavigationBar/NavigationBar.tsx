@@ -13,7 +13,8 @@ const NavigationBar = () => {
 
   const foodEstimatorLogo = () => {
     const logoCss = {
-      marginLeft: '50px'
+      marginLeft: '50px',
+      color: colors.menuFontColor,
     }
 
     return (
