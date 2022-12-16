@@ -25,7 +25,7 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-  @GetMapping("get-menu-of-the-week")
+  @GetMapping(ApiPathConstants.GET_MENU_OF_THE_WEEK)
   public Response<Map<Day, Map<Meal, List<Food>>>> getMenuOfTheWeek() {
     return employeeService.getMenuOfTheWeek();
   }
