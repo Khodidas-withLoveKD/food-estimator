@@ -1,6 +1,6 @@
 import { useStyletron } from 'baseui';
 
-import { colors } from "../../shared/theme";
+import { colors } from "../shared/theme";
 
 const NavigationBar = () => {
   // TODO: add theme styling support
