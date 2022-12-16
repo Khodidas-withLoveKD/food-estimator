@@ -2,10 +2,7 @@ package com.example.foodestimatorbackend.model.entity;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -13,8 +10,13 @@ import javax.persistence.Table;
 public class Employee {
 
   @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
   private int employee_id;
 
   @Column(name = "name")
   private String name;
+
+  @Column(name = "is_admin")
+  private Boolean is_admin;
+
 }
