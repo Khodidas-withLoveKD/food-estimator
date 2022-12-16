@@ -88,7 +88,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     System.out.println("foodsOfDayAndMeal = " + foodsOfDayAndMeal);
 
     Map<Day, Map<Meal, List<Food>>> menuOfTheWeek = generateMenuOfTheWeek();
-    System.out.println("VEFORE EVERYTHING menuOfTheWeek = " + menuOfTheWeek);
 
     for (foodOfDayAndMealDTO food: foodsOfDayAndMeal) {
       List<Food> existingFoodItems = menuOfTheWeek.get(food.getDay()).get(food.getMeal());
@@ -102,7 +101,6 @@ public class EmployeeServiceImpl implements EmployeeService {
       menuOfTheWeek.put(food.getDay(), menuOfTheMeal);
     }
 
-    System.out.println("AFTER ADDING ALL \nmenuOfTheWeek = " + menuOfTheWeek);
     Response<Map<Day, Map<Meal, List<Food>>>> response = new Response<>();
     response.setResponseObject(menuOfTheWeek);
     return response;
@@ -110,18 +108,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 
   private static Map<Day, Map<Meal, List<Food>>> generateMenuOfTheWeek() {
     Map<Day, Map<Meal, List<Food>>> menuOfTheWeek = new HashMap<>();
-    Map<Meal, List<Food>> menuOfDay = new HashMap<>();
-    menuOfDay.put(Meal.BREAKFAST, new ArrayList<>());
-    menuOfDay.put(Meal.LUNCH, new ArrayList<>());
-    menuOfDay.put(Meal.DINNER, new ArrayList<>());
+    for (Day dayOfTheWeek: Day.values()) {
+      Map<Meal, List<Food>> menuOfDay = new HashMap<>();
+      menuOfDay.put(Meal.BREAKFAST, new ArrayList<>());
+      menuOfDay.put(Meal.LUNCH, new ArrayList<>());
+      menuOfDay.put(Meal.DINNER, new ArrayList<>());
 
-    menuOfTheWeek.put(Day.MON, menuOfDay);
-    menuOfTheWeek.put(Day.TUE, menuOfDay);
-    menuOfTheWeek.put(Day.WED, menuOfDay);
-    menuOfTheWeek.put(Day.THURS, menuOfDay);
-    menuOfTheWeek.put(Day.FRI, menuOfDay);
-    menuOfTheWeek.put(Day.SAT, menuOfDay);
-    menuOfTheWeek.put(Day.SUN, menuOfDay);
+      menuOfTheWeek.put(dayOfTheWeek, menuOfDay);
+    }
 
     return menuOfTheWeek;
   }

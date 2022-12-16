@@ -11,14 +11,8 @@ import java.util.List;
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
-  List<Employee>findAll();
+  List<Employee> findAll();
 
-//  @Query( value = "select day, meal, food.food_id, name, img_url, category, rating, persons_rated " +
-//          "from menu " +
-//          "Inner join food " +
-//          "on menu.food_id = food.food_id " +
-//          "group by day, meal, menu.food_id;", nativeQuery = true)
-//  List<foodOfDayAndMealDTO> getFoodOfDayAndMeal();
   @Query(value = "select new com.example.foodestimatorbackend.model.dto.foodOfDayAndMealDTO" +
           "(M.day, M.meal, F.foodId, F.name, F.imgUrl, F.category, F.rating, F.personsRated) " +
           "FROM Menu M " +
