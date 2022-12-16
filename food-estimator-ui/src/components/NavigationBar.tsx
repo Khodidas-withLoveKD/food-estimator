@@ -1,11 +1,15 @@
 import { useStyletron } from 'baseui';
+import { useNavigate } from 'react-router-dom';
 
+import { routingPath } from '../constants/RoutingPaths';
 import { colors } from "../shared/theme";
 
 const NavigationBar = () => {
   // TODO: add theme styling support
 
   const [css, theme] = useStyletron()
+  const navigate = useNavigate()
+
   const navCss = {
     width: '100%',
     height: '60px',
@@ -47,7 +51,7 @@ const NavigationBar = () => {
     
     const menuOfTheWeek = () => {
       return(
-        <span className={css(menuItemCss)}>
+        <span className={css(menuItemCss)} onClick={() => navigate(routingPath.MENU_OF_THE_WEEK)}>
           menu of the week
         </span>
       )
