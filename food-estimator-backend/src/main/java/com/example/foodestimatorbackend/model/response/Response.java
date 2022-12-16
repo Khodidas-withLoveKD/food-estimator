@@ -11,16 +11,16 @@ import java.io.Serializable;
 @ToString
 @JsonInclude
 @AllArgsConstructor
-public class SelectionResponse<T> implements Serializable {
+public class Response<T> implements Serializable {
 
     private T responseObject;
     private HttpStatus statusCode;
 
-    public SelectionResponse() {
+    public Response() {
         this.statusCode = HttpStatus.OK;
     }
 
-    public SelectionResponse(T responseObject) {
+    public Response(T responseObject) {
         this.responseObject = responseObject;
         this.statusCode = HttpStatus.OK;
     }
