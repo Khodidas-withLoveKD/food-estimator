@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+
 @Slf4j
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -46,33 +47,29 @@ public class EmployeeServiceImpl implements EmployeeService {
         ArrayList<String> breakfast = selectionRequest.getBreakfast();
 
         for(int i=0;i<breakfast.size();i++) {
-          if (breakfast.get(i) == "Monday")
-          {
-            headCountRepository.insertIntoHeadCount(employee_id, Meal.BREAKFAST, Day.MON);
-          }
-          else if (breakfast.get(i) == "Tuesday")
-          {
-            headCountRepository.insertIntoHeadCount(employee_id, Meal.BREAKFAST, Day.TUE);
-          }
-          else if (breakfast.get(i) == "Wednesday")
-          {
-            headCountRepository.insertIntoHeadCount(employee_id, Meal.BREAKFAST, Day.WED);
-          }
-          else if (breakfast.get(i) == "Thursday")
-          {
-            headCountRepository.insertIntoHeadCount(employee_id, Meal.BREAKFAST, Day.THURS);
-          }
-          else if (breakfast.get(i) == "Friday")
-          {
-            headCountRepository.insertIntoHeadCount(employee_id, Meal.BREAKFAST, Day.FRI);
-          }
-          else if (breakfast.get(i) == "Saturday")
-          {
-            headCountRepository.insertIntoHeadCount(employee_id, Meal.BREAKFAST, Day.SAT);
-          }
-          else if (breakfast.get(i) == "Sunday")
-          {
-            headCountRepository.insertIntoHeadCount(employee_id, Meal.BREAKFAST, Day.SUN);
+          switch (Day.valueOf(breakfast.get(i))) {
+            case MON:
+              headCountRepository.insertIntoHeadCount(employee_id, "BREAKFAST", "MON");
+              break;
+            case TUE:
+              headCountRepository.insertIntoHeadCount(employee_id, "BREAKFAST", "TUE");
+              break;
+            case WED:
+              headCountRepository.insertIntoHeadCount(employee_id, "BREAKFAST", "WED");
+              break;
+            case THURS:
+              headCountRepository.insertIntoHeadCount(employee_id, "BREAKFAST", "THURS");
+              break;
+            case FRI:
+              headCountRepository.insertIntoHeadCount(employee_id, "BREAKFAST", "FRI");
+              break;
+            case SAT:
+              headCountRepository.insertIntoHeadCount(employee_id, "BREAKFAST", "SAT");
+              break;
+            case SUN:
+              headCountRepository.insertIntoHeadCount(employee_id, "BREAKFAST", "SUN");
+              break;
+
           }
 
         }
