@@ -1,7 +1,11 @@
+import { useStyletron } from 'baseui';
+
 import { colors } from "../../shared/theme";
 
-import './navigation.scss'
 const NavigationBar = () => {
+  // TODO: add theme styling support
+
+  const [css, theme] = useStyletron()
   const navCss = {
     width: '100%',
     height: '60px',
@@ -18,7 +22,7 @@ const NavigationBar = () => {
     }
 
     return (
-      <span style={logoCss}>
+      <span className={css(logoCss)}>
       Food Estimator
       </span>
     )
@@ -36,25 +40,28 @@ const NavigationBar = () => {
     const menuItemCss = {
       color: colors.menuFontColor,
       cursor: 'pointer',
+      ':hover' : {
+        textDecoration: 'underline'
+      }
     }
     
     const menuOfTheWeek = () => {
       return(
-        <span className='menu-item' style={menuItemCss}>
+        <span className={css(menuItemCss)}>
           menu of the week
         </span>
       )
     }
     const goingToEat = () => {
       return(
-        <span className='menu-item' style={menuItemCss}>
+        <span className={css(menuItemCss)}>
           goingToEat
         </span>
       )
     }
     const topFoods = () => {
       return(
-        <span className='menu-item' style={menuItemCss}>
+        <span className={css(menuItemCss)}>
           topFoods
         </span>
       )
