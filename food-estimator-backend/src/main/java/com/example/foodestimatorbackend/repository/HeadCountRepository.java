@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface HeadCountRepository extends JpaRepository<HeadCount, Integer> {
@@ -18,6 +19,6 @@ public interface HeadCountRepository extends JpaRepository<HeadCount, Integer> {
 
     @Modifying
     @Query(value = "insert into head_count (employee_id, meal, day) values(:employee_id, :meal, :day)", nativeQuery = true)
-    void insertIntoHeadCount(@Param("employee_id") int employee_id, @Param("meal")Meal meal, @Param("day")Day day);
+    void insertIntoHeadCount(@Param("employee_id") int employee_id, @Param("meal")String meal, @Param("day")String day);
 
 }
