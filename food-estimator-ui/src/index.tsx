@@ -1,5 +1,5 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom'
 import { Client as Styletron } from "styletron-engine-atomic";
 import { DebugEngine, Provider as StyletronProvider } from "styletron-react";
 
@@ -22,7 +22,9 @@ const engine = new Styletron();
 // debug engine needs inlined source maps
 root.render(
   <StyletronProvider value={engine} debug={debug} debugAfterHydration>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </StyletronProvider>
 );
 // If you want to start measuring performance in your app, pass a function
