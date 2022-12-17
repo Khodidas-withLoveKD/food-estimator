@@ -18,20 +18,32 @@ const MealSelectionPage = () => {
   const [css, theme] = useStyletron()
 
   const [selectedMeal, setSelectedMeal] = useState<Map<string, Array<boolean>>>(selectedMealsMap)
-  console.log('kd selectedMeal:', selectedMeal)
   const mealToIsSelectedMap = {
     [meal.BREAKFAST]: 0,
     [meal.LUCNH]: 1,
     [meal.DINNER]: 2
   }
 
-  // mealToIsSelectedMap[meal.BREAKFAST]
-
   useEffect(() => {
     const getMenuSelectionUrl = employeeBaseUrl + '1/getSelection'
     axios.get(getMenuSelectionUrl).then((response) => {
-      // response.data.responseObject
-      console.log('kd response.data.responseObject:', response.data.responseObject)
+      const selectedMealsResponse = response.data.responseObject
+      const currentSelectedMealMap = selectedMeal
+
+      const setMealsArrayForCurrentDay = (currentSelectedMeals: Array<meal>, currentMealsArray: Array<boolean>) => {
+        currentSelectedMeals.forEach((meal: meal) => {
+          currentMealsArray[mealToIsSelectedMap[meal]] = true
+        })
+        return currentMealsArray
+      }
+
+      for (const selectedMealDay in selectedMealsResponse) {
+        const selectedMeals = selectedMealsResponse[selectedMealDay].split(',')
+        currentSelectedMealMap.set(selectedMealDay, setMealsArrayForCurrentDay(selectedMeals, currentSelectedMealMap.get(selectedMealDay) ?? []) )
+      }
+      selectedMealsResponse.forEach((selectedMealDay: any) => {
+        // currentSelectedMealMap
+      })
     })
   }, [])
 
@@ -64,7 +76,7 @@ const MealSelectionPage = () => {
           const mealOfTheDay: Array<boolean> = selectedMeal.get(day.id) ?? []
           const isSelected = (mealId: meal) => mealOfTheDay[mealToIsSelectedMap[mealId]]
           const isSelectedCss = (mealId: any) => {
-            console.log(`kd day = ${day.id} | meal = ${mealId} | isSelected ${isSelected(mealId)}`)
+            // console.log(`kd day = ${day.id} | meal = ${mealId} | isSelected ${isSelected(mealId)}`)
             return isSelected(mealId) ? { backgroundColor: 'cyan' } : {}
           }
           
