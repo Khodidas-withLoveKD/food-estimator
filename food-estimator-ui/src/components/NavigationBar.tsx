@@ -2,7 +2,7 @@ import { useStyletron } from 'baseui';
 import { useNavigate } from 'react-router-dom';
 
 import { routingPath } from '../constants/RoutingPaths';
-import { colors } from "../shared/theme";
+import { themeColors } from "../shared/theme";
 
 const NavigationBar = () => {
   // TODO: add theme styling support
@@ -13,7 +13,7 @@ const NavigationBar = () => {
   const navCss = {
     width: '100%',
     height: '60px',
-    backgroundColor: colors.primary,
+    backgroundColor: themeColors.primary,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between'
@@ -22,7 +22,7 @@ const NavigationBar = () => {
   const foodEstimatorLogo = () => {
     const logoCss = {
       marginLeft: '50px',
-      color: colors.menuFontColor,
+      color: themeColors.menuFontColor,
     }
 
     return (
@@ -42,7 +42,7 @@ const NavigationBar = () => {
     }
     
     const menuItemCss = {
-      color: colors.menuFontColor,
+      color: themeColors.menuFontColor,
       cursor: 'pointer',
       ':hover' : {
         textDecoration: 'underline'

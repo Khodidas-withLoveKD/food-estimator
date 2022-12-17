@@ -1,4 +1,4 @@
-import { day } from "./Enums";
+import { day, meal } from "./Enums";
 
 export const daysOfTheWeek = [
   {
@@ -28,5 +28,20 @@ export const daysOfTheWeek = [
   {
     label: 'Sun',
     id: day.SUN
+  },
+]
+
+export const mealTimes = [
+  {
+    label: 'BreakFast',
+    id: meal.BREAKFAST
+  },
+  {
+    label: 'Lunch',
+    id: meal.LUCNH
+  },
+  {
+    label: 'Dinner',
+    id: meal.DINNER
   },
 ]

@@ -1,4 +1,6 @@
 import { useStyletron } from "baseui";
+import MealSelectionPage from "../components/MealSelectionPage";
+import MenuOfTheWeek from "../components/MenuOfTheWeek";
 
 const MenuAndMealSelectionPage = () => {
   const [css, theme] = useStyletron()
@@ -12,7 +14,8 @@ const MenuAndMealSelectionPage = () => {
       display: 'flex',
       justifyContent: 'center'
     })}>
-      sfsdf
+      <MealSelectionPage />
+      <MenuOfTheWeek />
     </div>
   )
 }
