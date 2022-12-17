@@ -14,7 +14,7 @@ function App() {
         <Route path={routingPath.MENU_OF_THE_WEEK_AND_MEAL_SELECTION_PAGE} element={ <MenuAndMealSelectionPage />} />
       </Routes>
     </div>
-  );
+  )
 }
 
 

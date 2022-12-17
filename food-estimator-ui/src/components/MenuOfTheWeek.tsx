@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { category, day, meal } from "../constants/Enums";
-import { foodEstimatorAPIs } from "./api";
 import axios from 'axios';
 import { useStyletron } from "baseui";
 const baseUrl = 'http://localhost:10160/v1/food-estimator/'
