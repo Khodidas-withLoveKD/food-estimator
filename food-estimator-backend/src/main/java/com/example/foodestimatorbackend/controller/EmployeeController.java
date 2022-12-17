@@ -22,6 +22,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(ApiPathConstants.EMPLOYEE_API_BASE_PATH)
 @Slf4j
+@CrossOrigin(origins = "http://localhost:3000")
 public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;

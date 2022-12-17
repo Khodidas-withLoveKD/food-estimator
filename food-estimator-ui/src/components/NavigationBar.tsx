@@ -2,7 +2,7 @@ import { useStyletron } from 'baseui';
 import { useNavigate } from 'react-router-dom';
 
 import { routingPath } from '../constants/RoutingPaths';
-import { colors } from "../shared/theme";
+import { themeColors } from "../shared/theme";
 
 const NavigationBar = () => {
   // TODO: add theme styling support
@@ -13,7 +13,7 @@ const NavigationBar = () => {
   const navCss = {
     width: '100%',
     height: '60px',
-    backgroundColor: colors.primary,
+    backgroundColor: themeColors.primary,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between'
@@ -22,7 +22,7 @@ const NavigationBar = () => {
   const foodEstimatorLogo = () => {
     const logoCss = {
       marginLeft: '50px',
-      color: colors.menuFontColor,
+      color: themeColors.menuFontColor,
     }
 
     return (
@@ -42,7 +42,7 @@ const NavigationBar = () => {
     }
     
     const menuItemCss = {
-      color: colors.menuFontColor,
+      color: themeColors.menuFontColor,
       cursor: 'pointer',
       ':hover' : {
         textDecoration: 'underline'
@@ -51,22 +51,29 @@ const NavigationBar = () => {
     
     const menuOfTheWeek = () => {
       return(
-        <span className={css(menuItemCss)} onClick={() => navigate(routingPath.MENU_OF_THE_WEEK)}>
-          menu of the week
+        <span className={css(menuItemCss)} onClick={() => navigate(routingPath.MENU_OF_THE_WEEK_AND_MEAL_SELECTION_PAGE)}>
+          Hungry?
         </span>
       )
     }
-    const goingToEat = () => {
+    const headCount = () => {
       return(
         <span className={css(menuItemCss)}>
-          goingToEat
+          Head Count
+        </span>
+      )
+    }
+    const setMenu = () => {
+      return(
+        <span className={css(menuItemCss)}>
+          Set Menu
         </span>
       )
     }
     const topFoods = () => {
       return(
         <span className={css(menuItemCss)}>
-          topFoods
+          Top Foods
         </span>
       )
     }
@@ -75,8 +82,9 @@ const NavigationBar = () => {
     return (
       <div style={menuCss}>
         {menuOfTheWeek()}
-        {goingToEat()}
         {topFoods()}
+        {headCount()}
+        {setMenu()}
       </div>
     )
   }
