@@ -13,14 +13,16 @@ public class HeadCount {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private Integer id;
 
     @Column(name = "employee_id")
-    private int employee_id;
+    private Integer employee_id;
 
     @Column(name = "meal")
+    @Enumerated(EnumType.STRING)
     private Meal meal;
 
     @Column(name = "day")
+    @Enumerated(EnumType.STRING)
     private Day day;
 }

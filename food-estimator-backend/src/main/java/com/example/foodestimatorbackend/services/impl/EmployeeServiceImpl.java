@@ -3,6 +3,7 @@ package com.example.foodestimatorbackend.services.impl;
 import com.example.foodestimatorbackend.constants.enums.Day;
 import com.example.foodestimatorbackend.constants.enums.Meal;
 import com.example.foodestimatorbackend.model.dto.MenuOfTheWeek;
+import com.example.foodestimatorbackend.model.dto.SelectedDayofEmployeeDTO;
 import com.example.foodestimatorbackend.model.dto.foodOfDayAndMealDTO;
 import com.example.foodestimatorbackend.model.entity.Food;
 import com.example.foodestimatorbackend.model.request.SelectionRequest;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Slf4j
@@ -179,6 +182,21 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     return menuOfTheWeek;
+  }
+
+  @Override
+  public Response<HashMap<String, String>> getSelection(int employee_id) {
+    List<Map<String,String>> selectedDaysFromDB = new ArrayList<>();
+
+    selectedDaysFromDB = headCountRepository.getSelectedDays(employee_id);
+    HashMap<String, String> finalList = new HashMap<>();
+    selectedDaysFromDB.forEach(jsonObject -> {
+      System.out.println(jsonObject);
+      finalList.put(jsonObject.get("day").toString(), jsonObject.get("meal").toString());
+    });
+    Response<HashMap<String, String>> response = new Response<>(finalList);
+    return response;
+
   }
 
 }

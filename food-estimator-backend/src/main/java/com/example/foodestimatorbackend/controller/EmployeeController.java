@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -37,4 +38,11 @@ public class EmployeeController {
 //        return new ResponseEntity<>(selectionResponse, selectionResponse.getStatusCode());
       return response;
   }
+
+  @RequestMapping(value = ApiPathConstants.GET_SELECTION_API, method = RequestMethod.GET)
+    public Response<HashMap<String,String>> getSelection(@PathVariable(value = ApiPathConstants.EMPLOYEE_ID) int employee_id) {
+      Response<HashMap<String,String>> response = employeeService.getSelection(employee_id);
+      return response;
+  }
+
 }
