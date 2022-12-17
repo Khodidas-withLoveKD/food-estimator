@@ -33,7 +33,7 @@ export const daysOfTheWeek = [
 
 export const mealTimes = [
   {
-    label: 'BreakFast',
+    label: 'Breakfast',
     id: meal.BREAKFAST
   },
   {
@@ -45,3 +45,6 @@ export const mealTimes = [
     id: meal.DINNER
   },
 ]
+
+const baseUrl = 'http://localhost:10160/v1/food-estimator/'
+export const employeeBaseUrl = baseUrl + 'employee/'

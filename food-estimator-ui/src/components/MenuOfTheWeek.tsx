@@ -35,7 +35,7 @@ const MenuOfTheWeek = () => {
   const [breakfastOfTheDay, setBreakfastOfTheDay] = useState<Array<IFood>>([mockFoodItem])
   const [lunchOfTheDay, setLunchOfTheDay] = useState<Array<IFood>>([mockFoodItem])
   const [dinnerOfTheDay, setDinnerOfTheDay] = useState<Array<IFood>>([mockFoodItem])
-  const [selectedDay, setSelectedDay] = useState<day>(day.MON)
+  const [selectedDay, setSelectedDay] = useState<string>(day.MON)
   
   useEffect(() => {
     const url = employeeControllerUrl + 'get-menu-of-the-week'
@@ -69,7 +69,7 @@ const MenuOfTheWeek = () => {
           textDecoration: 'underline',
           textDecorationColor: themeColors.primary
         }
-      })}>
+      })} onClick={() => setSelectedDay(day.id)}>
         {day.label}
       </span>
     )
@@ -103,7 +103,7 @@ const MenuOfTheWeek = () => {
     )
 
     const renderMealItems = (mealId: string) => {
-      const menuNotAvailable = () => <h3>Menu not Available! :(</h3>
+      const menuNotAvailable = () => <h4>Menu not decided yet! :(</h4>
       const getMealItems = (mealId: string) => {
         let currentMealItems: Array<IFood> = [mockFoodItem]
         switch(mealId) {
@@ -129,7 +129,7 @@ const MenuOfTheWeek = () => {
           flexWrap: 'wrap',
           justifyContent: 'space-between',
         })}>
-          {mealItems ? mealItems.map((food: IFood) =>          
+          {mealItems.length ? mealItems.map((food: IFood) =>          
             <MessageCard
               heading={food.name}
               paragraph="Pellentesque velit purus, luctus non lorem in, rutrum ultricies quam."
