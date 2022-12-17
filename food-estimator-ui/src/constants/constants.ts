@@ -21,19 +21,19 @@ export const daysOfTheWeek = [
     label: 'Fri',
     id: day.FRI
   },
-  {
-    label: 'Sat',
-    id: day.SAT
-  },
-  {
-    label: 'Sun',
-    id: day.SUN
-  },
+  // {
+  //   label: 'Sat',
+  //   id: day.SAT
+  // },
+  // {
+  //   label: 'Sun',
+  //   id: day.SUN
+  // },
 ]
 
 export const mealTimes = [
   {
-    label: 'BreakFast',
+    label: 'Breakfast',
     id: meal.BREAKFAST
   },
   {
@@ -45,3 +45,6 @@ export const mealTimes = [
     id: meal.DINNER
   },
 ]
+
+const baseUrl = 'http://localhost:10160/v1/food-estimator/'
+export const employeeBaseUrl = baseUrl + 'employee/'
