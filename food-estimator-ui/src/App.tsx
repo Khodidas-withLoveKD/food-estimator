@@ -11,16 +11,12 @@ function App() {
   return (
     <div className="App">
       <NavigationBar />
-<<<<<<< HEAD
-      <MealSelectionPage />
-=======
       <Routes>
         <Route path={routingPath.MENU_OF_THE_WEEK} element={ <MenuOfTheWeek />} />
-        <Route path={routingPath.MEAL_SELECTION_PAGE} element={ <MenuOfTheWeek />} />
+        <Route path={routingPath.MEAL_SELECTION_PAGE} element={ <MealSelectionPage />} />
       </Routes>
->>>>>>> 80a04f2ba2d8e5a53846dba43e959e2668a23aed
     </div>
-  );
+  )
 }
 
 

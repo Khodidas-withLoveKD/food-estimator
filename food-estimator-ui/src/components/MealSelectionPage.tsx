@@ -1,13 +1,13 @@
 import { useStyletron } from 'baseui';
 import { colors } from '../shared/theme';
 import { Select } from "baseui/select";
-import * as React from "react";
+import React, {useState} from "react";
 
 
 const MealSelectionPage = () => {
 
     const [css, theme] = useStyletron()
-    const [value, setValue] = React.useState([]);
+    const [value, setValue] = useState<String[]>();
       
     return (
         <div className={css({
@@ -23,13 +23,8 @@ const MealSelectionPage = () => {
           { label: "Saturday", id: "SAT" }
         ]}
         value={value}
-        multi
-        placeholder="Select Day"
-        
+        onChange={value => setValue(value)}
       />
-         
-            Selection Page
-        </div>
     )
 
 }
