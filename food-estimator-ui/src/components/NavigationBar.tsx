@@ -51,22 +51,29 @@ const NavigationBar = () => {
     
     const menuOfTheWeek = () => {
       return(
-        <span className={css(menuItemCss)} onClick={() => navigate(routingPath.MENU_OF_THE_WEEK)}>
-          menu of the week
+        <span className={css(menuItemCss)} onClick={() => navigate(routingPath.MENU_OF_THE_WEEK_AND_MEAL_SELECTION_PAGE)}>
+          Hungry?
         </span>
       )
     }
-    const goingToEat = () => {
+    const headCount = () => {
       return(
         <span className={css(menuItemCss)}>
-          goingToEat
+          Head Count
+        </span>
+      )
+    }
+    const setMenu = () => {
+      return(
+        <span className={css(menuItemCss)}>
+          Set Menu
         </span>
       )
     }
     const topFoods = () => {
       return(
         <span className={css(menuItemCss)}>
-          topFoods
+          Top Foods
         </span>
       )
     }
@@ -75,8 +82,9 @@ const NavigationBar = () => {
     return (
       <div style={menuCss}>
         {menuOfTheWeek()}
-        {goingToEat()}
         {topFoods()}
+        {headCount()}
+        {setMenu()}
       </div>
     )
   }
