@@ -1,14 +1,12 @@
 package com.example.foodestimatorbackend.controller;
 
 import com.example.foodestimatorbackend.constants.enums.ApiPathConstants;
+import com.example.foodestimatorbackend.model.request.MenuRequest;
 import com.example.foodestimatorbackend.model.response.Response;
 import com.example.foodestimatorbackend.services.AdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -26,9 +24,9 @@ public class AdminController {
         return response;
     }
 
-    @RequestMapping(value = ApiPathConstants.SET_MENU_OF_THE_WEEK, method = RequestMethod.PUT)
-    public Response<String> editMenu() {
-        Response<String> response = adminService.editMenu();
+    @RequestMapping(value = ApiPathConstants.SET_MENU_OF_THE_WEEK, method = RequestMethod.POST)
+    public Response<String> editMenu(@RequestBody MenuRequest menuRequest) {
+        Response<String> response = adminService.editMenu(menuRequest);
         return response;
     }
 

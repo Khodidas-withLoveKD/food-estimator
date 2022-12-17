@@ -1,16 +1,18 @@
 package com.example.foodestimatorbackend.services.impl;
 
+import com.example.foodestimatorbackend.constants.enums.Day;
+import com.example.foodestimatorbackend.constants.enums.Meal;
+import com.example.foodestimatorbackend.model.request.MenuRequest;
 import com.example.foodestimatorbackend.model.response.Response;
 import com.example.foodestimatorbackend.repository.HeadCountRepository;
+import com.example.foodestimatorbackend.repository.MenuRepository;
 import com.example.foodestimatorbackend.services.AdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -18,6 +20,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private HeadCountRepository headCountRepository;
+
+    @Autowired
+    private MenuRepository menuRepository;
 
     @Override
     public Response<Map<String, Map<String,Integer>>> getHeadCount() {
@@ -39,9 +44,27 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Response<String> editMenu() {
+    @Transactional
+    public Response<String> editMenu(MenuRequest menuRequest) {
 
-        return null;
+        Set<String> days = menuRequest.getNewMenu().keySet();
+        menuRepository.deleteFromMenu(days);
+        Response<String> response =new Response<>();
+
+        for(String day:days) {
+            Set<String>meals = menuRequest.getNewMenu().get(day).keySet();
+
+            for(String meal:meals) {
+                List<Integer> foodIds = menuRequest.getNewMenu().get(day).get(meal);
+
+                for(Integer foodId:foodIds) {
+                    menuRepository.insertIntoMenu(foodId, meal,day);
+                }
+            }
+        }
+
+        response.setResponseObject("Menu added successfully");
+        return response;
     }
 
 }
