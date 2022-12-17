@@ -21,14 +21,14 @@ export const daysOfTheWeek = [
     label: 'Fri',
     id: day.FRI
   },
-  {
-    label: 'Sat',
-    id: day.SAT
-  },
-  {
-    label: 'Sun',
-    id: day.SUN
-  },
+  // {
+  //   label: 'Sat',
+  //   id: day.SAT
+  // },
+  // {
+  //   label: 'Sun',
+  //   id: day.SUN
+  // },
 ]
 
 export const mealTimes = [

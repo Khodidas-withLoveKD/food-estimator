@@ -1,8 +1,4 @@
 import { useStyletron } from 'baseui';
-import { themeColors } from '../shared/theme';
-import { Select } from "baseui/select";
-import {useState} from "react";
-import MenuOfTheWeek from './MenuOfTheWeek';
 import { daysOfTheWeek, mealTimes } from '../constants/constants';
 import { ISelect } from '../constants/interfaces';
 
@@ -91,7 +87,10 @@ const MealSelectionPage = () => {
       paddingLeft: '30px',
       paddingRight: '30px',
       paddingBottom: '20px',
-      flexGrow: 0.4
+      flexGrow: 0.4,
+      backgroundColor: 'grey',
+      position: 'sticky', // TODO: make position sticky work
+      top: '100px'
     })}>
       {heading()}
       {mealSelection()}
