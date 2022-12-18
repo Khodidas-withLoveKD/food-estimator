@@ -2,9 +2,17 @@ import { useStyletron } from 'baseui';
 import axios from 'axios';
 
 import { useEffect, useState } from 'react';
-import { employeeBaseUrl, daysOfTheWeek, mealTimes } from '../constants/constants';
+import { employeeBaseUrl, daysOfTheWeek, mealTimes, employeeId } from '../constants/constants';
 import { ISelect } from '../constants/interfaces';
 import { day, meal } from '../constants/Enums';
+import { Button, SIZE } from 'baseui/button';
+import { Block } from "baseui/block";
+
+import {
+  toaster,
+  ToasterContainer,
+  PLACEMENT
+} from "baseui/toast";
 
 const selectedMealsMap = new Map([
   [day.MON, [false, false, false]],
@@ -25,7 +33,7 @@ const MealSelectionPage = () => {
   }
 
   useEffect(() => {
-    const getMenuSelectionUrl = employeeBaseUrl + '1/getSelection'
+    const getMenuSelectionUrl = employeeBaseUrl + `${employeeId}/getSelection`
     axios.get(getMenuSelectionUrl).then((response) => {
       const selectedMealsResponse = response.data.responseObject
       const currentSelectedMealMap = new Map(selectedMeal)
@@ -44,6 +52,20 @@ const MealSelectionPage = () => {
       setSelectedMeal(currentSelectedMealMap)
     })
   }, [])
+
+  const heading = () => (
+    <div className={css({
+      backgroundColor: 'pink'
+    })}>
+      <span className={css({
+        fontSize: '20px',
+        // color: themeColors.menuFontColor,
+        textDecoration: 'underline'
+      })}>
+        Meal Selection
+      </span>
+    </div>
+  )
 
   const mealSelection = () => {
     const renderDayAndMeal = (day: ISelect) => {
@@ -122,19 +144,98 @@ const MealSelectionPage = () => {
       </div>
     )
   }
-  const heading = () => (
-    <div className={css({
-      backgroundColor: 'pink'
-    })}>
-      <span className={css({
-        fontSize: '20px',
-        // color: themeColors.menuFontColor,
-        textDecoration: 'underline'
-      })}>
-        Meal Selection
-      </span>
-    </div>
-  )
+
+  const saveMenuSelection = async () => {
+    const generatePayload = () => {
+      const payload:any = {}
+      // for (let [key, value] of selectedMeal.entries()) {
+
+      // }
+      selectedMeal.forEach((value, key) => {
+        console.log('kd key:', key)
+        console.log('kd value:', value)
+        payload[key] = value
+      })
+      console.log('kd payload:', payload)
+      return {selectedOptions: payload}
+    }
+
+    const showToaster = () => {
+      console.log('kd INSIDE showToaster:')
+      return <ToasterContainer placement={PLACEMENT.bottomLeft}>
+      <Button
+        onClick={() => {
+          let toastKey: any;
+          const msg =
+            "Your Meal preference has been saved. See you at the table :)";
+          const ok = (
+            <Block
+              marginTop="15px"
+              display="flex"
+              justifyContent="center"
+            >
+              <Button
+                size={SIZE.compact}
+                onClick={() => toaster.clear(toastKey)}
+              >
+                Ok
+              </Button>
+            </Block>
+          );
+          // const showMore = (
+          //   <Block
+          //     marginTop="15px"
+          //     display="flex"
+          //     justifyContent="left"
+          //   >
+          //     <Button
+          //       size={SIZE.compact}
+          //       onClick={() =>
+          //         toaster.update(toastKey, {
+          //           children: (
+          //             <>
+          //               {msg} to show different
+          //               notification type. {ok}
+          //             </>
+          //           )
+          //         })
+          //       }
+          //     >
+          //       Show more
+          //     </Button>
+          //   </Block>
+          // );
+          toastKey = toaster.info(
+            <>
+              {msg}
+            </>,
+            {
+              onClose: () => console.log("Toast closed."),
+              overrides: {
+                InnerContainer: {
+                  style: { width: "100%" }
+                }
+              }
+            }
+          );
+        }}
+      >
+        Show notification
+      </Button>
+    </ToasterContainer>
+    }
+
+    const postMenuSelectionUrl = employeeBaseUrl + `${employeeId}/selection`
+    // const result = await axios.post(postMenuSelectionUrl, payload)
+    // console.log(result)
+    generatePayload()
+    axios.post(postMenuSelectionUrl, generatePayload()).then((response: any) => {
+      // TODO: create Toaster
+      showToaster()
+    })
+  }
+
+  const submitButton = () => <Button onClick={() => saveMenuSelection()}>Submit</Button>
 
   return (
     <div className={css({
@@ -149,6 +250,7 @@ const MealSelectionPage = () => {
     })}>
       {heading()}
       {mealSelection()}
+      {submitButton()}
     </div>
   )
 }

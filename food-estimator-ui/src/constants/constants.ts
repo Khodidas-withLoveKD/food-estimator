@@ -48,3 +48,4 @@ export const mealTimes = [
 
 const baseUrl = 'http://localhost:10160/v1/food-estimator/'
 export const employeeBaseUrl = baseUrl + 'employee/'
+export const employeeId = 1
