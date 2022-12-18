@@ -36,7 +36,6 @@ public class EmployeeController {
   public Response addSelection(@PathVariable(value = ApiPathConstants.EMPLOYEE_ID) int employee_id, @RequestBody SelectionRequest selectionRequest) {
       log.info("Entered adding selection for employee_id:{}", employee_id);
       Response response = employeeService.addSelection(employee_id, selectionRequest);
-//        return new ResponseEntity<>(selectionResponse, selectionResponse.getStatusCode());
       return response;
   }
 

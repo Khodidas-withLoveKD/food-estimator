@@ -158,9 +158,8 @@ public class EmployeeServiceImpl implements EmployeeService {
       Food newFood = new Food();
       BeanUtils.copyProperties(food, newFood);
       existingFoodItems.add(newFood);
-      Map<Meal, List<Food>> menuOfTheMeal = new HashMap<Meal, List<Food>>(){{
-        put(food.getMeal(), existingFoodItems);
-      }};
+      Map<Meal, List<Food>> menuOfTheMeal = menuOfTheWeek.get(food.getDay());
+      menuOfTheMeal.put(food.getMeal(), existingFoodItems);
 
       menuOfTheWeek.put(food.getDay(), menuOfTheMeal);
     }
