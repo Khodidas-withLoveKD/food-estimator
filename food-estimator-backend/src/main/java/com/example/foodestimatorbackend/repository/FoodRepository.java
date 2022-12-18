@@ -12,4 +12,6 @@ import java.util.List;
 public interface FoodRepository extends JpaRepository<Food, Integer> {
 
   List<Food> findByCategoryOrderByRatingDesc(@Param("category") Category category);
+
+  List<Food> findByCategoryOrderByRatingAsc(@Param("category") Category category);
 }

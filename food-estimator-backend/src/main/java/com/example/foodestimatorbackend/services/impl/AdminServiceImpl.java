@@ -126,9 +126,16 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Response<List<Food>> getFoodItemsOfCategorySortedByRating(Category category) {
+    public Response<List<Food>> getFoodItemsOfCategorySortedByRatingDesc(Category category) {
         Response<List<Food>> response = new Response<>();
         response.setResponseObject(foodRepository.findByCategoryOrderByRatingDesc(category));
+        return response;
+    }
+
+    @Override
+    public Response<List<Food>> getFoodItemsOfCategorySortedByRatingAsc(Category category) {
+        Response<List<Food>> response = new Response<>();
+        response.setResponseObject(foodRepository.findByCategoryOrderByRatingAsc(category));
         return response;
     }
 

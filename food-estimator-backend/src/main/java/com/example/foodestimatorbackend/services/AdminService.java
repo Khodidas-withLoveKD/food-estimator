@@ -15,6 +15,8 @@ public interface AdminService {
 
     Response<List<Food>> getAllFoodItems();
 
-    Response<List<Food>> getFoodItemsOfCategorySortedByRating(Category category);
+    Response<List<Food>> getFoodItemsOfCategorySortedByRatingDesc(Category category);
+
+    Response<List<Food>> getFoodItemsOfCategorySortedByRatingAsc(Category category);
 
 }

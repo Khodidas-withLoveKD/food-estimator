@@ -39,9 +39,13 @@ public class AdminController {
         return adminService.getAllFoodItems();
     }
 
-    @GetMapping(value = ApiPathConstants.GET_FOOD_ITEMS_BY_CATEGORY_SORTED_BY_RATING)
-    public Response<List<Food>> getFoodItemsOfCategorySortedByRating(@RequestParam Category category) {
-        return adminService.getFoodItemsOfCategorySortedByRating(category);
+    @GetMapping(value = ApiPathConstants.GET_FOOD_ITEMS_BY_CATEGORY_SORTED_BY_RATING_DESC)
+    public Response<List<Food>> getFoodItemsOfCategorySortedByRatingDesc(@RequestParam Category category) {
+        return adminService.getFoodItemsOfCategorySortedByRatingDesc(category);
     }
 
+    @GetMapping(value = ApiPathConstants.GET_FOOD_ITEMS_BY_CATEGORY_SORTED_BY_RATING_ASC)
+    public Response<List<Food>> getFoodItemsOfCategorySortedByRatingAsc(@RequestParam Category category) {
+        return adminService.getFoodItemsOfCategorySortedByRatingAsc(category);
+    }
 }
