@@ -26,4 +26,7 @@ public class Food {
   private Float rating;
   @Column(name = "persons_rated")
   private Integer personsRated;
+
+  @Column(name = "food_description")
+  private String foodDescription;
 }

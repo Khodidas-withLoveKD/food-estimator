@@ -10,4 +10,5 @@ public class ApiPathConstants {
     public static final String GET_SELECTION_API = "/{employee_id}/getSelection";
     public static final String GET_HEAD_COUNT = "/getHeadCount";
     public static final String SET_MENU_OF_THE_WEEK = "/editMenu";
+    public static final String GET_ALL_FOOD_ITEMS = "/get-all-food-items";
 }

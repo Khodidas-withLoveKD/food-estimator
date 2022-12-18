@@ -1,6 +1,7 @@
 package com.example.foodestimatorbackend.controller;
 
 import com.example.foodestimatorbackend.constants.enums.ApiPathConstants;
+import com.example.foodestimatorbackend.model.entity.Food;
 import com.example.foodestimatorbackend.model.request.MenuRequest;
 import com.example.foodestimatorbackend.model.response.Response;
 import com.example.foodestimatorbackend.services.AdminService;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -29,6 +31,11 @@ public class AdminController {
     public Response<String> editMenu(@RequestBody MenuRequest menuRequest) {
         Response<String> response = adminService.editMenu(menuRequest);
         return response;
+    }
+
+    @GetMapping(value = ApiPathConstants.GET_ALL_FOOD_ITEMS)
+    public Response<List<Food>> getAllFoodItems() {
+        return adminService.getAllFoodItems();
     }
 
 }

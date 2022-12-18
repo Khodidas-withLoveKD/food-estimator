@@ -2,13 +2,16 @@ package com.example.foodestimatorbackend.services.impl;
 
 import com.example.foodestimatorbackend.constants.enums.Day;
 import com.example.foodestimatorbackend.constants.enums.Meal;
+import com.example.foodestimatorbackend.model.entity.Food;
 import com.example.foodestimatorbackend.model.request.MenuRequest;
 import com.example.foodestimatorbackend.model.response.Response;
+import com.example.foodestimatorbackend.repository.FoodRepository;
 import com.example.foodestimatorbackend.repository.HeadCountRepository;
 import com.example.foodestimatorbackend.repository.MenuRepository;
 import com.example.foodestimatorbackend.services.AdminService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +26,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Autowired
     private MenuRepository menuRepository;
+
+    @Autowired
+    private FoodRepository foodRepository;
 
     @Override
     public Response<Map<String, Map<String,Integer>>> getHeadCount() {
@@ -64,6 +70,14 @@ public class AdminServiceImpl implements AdminService {
         }
 
         response.setResponseObject("Menu added successfully");
+        return response;
+    }
+
+    @Override
+    public Response<List<Food>> getAllFoodItems() {
+        Response<List<Food>> response = new Response<>();
+        response.setResponseObject(foodRepository.findAll(Sort.by("category")));
+
         return response;
     }
 
