@@ -13,6 +13,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(ApiPathConstants.ADMIN_API_BASE_PATH)
 @Slf4j
+@CrossOrigin(origins = "http://localhost:3000")
 public class AdminController {
 
     @Autowired

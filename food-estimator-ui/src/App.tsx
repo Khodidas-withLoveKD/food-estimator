@@ -5,6 +5,7 @@ import { routingPath } from './constants/RoutingPaths';
 
 import './App.css';
 import MenuAndMealSelectionPage from './pages/MenuAndMealSelectionPage';
+import HeadCountPage from './components/HeadCountPage';
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
       <NavigationBar />
       <Routes>
         <Route path={routingPath.MENU_OF_THE_WEEK_AND_MEAL_SELECTION_PAGE} element={ <MenuAndMealSelectionPage />} />
+        <Route path={routingPath.HEAD_COUNT} element={<HeadCountPage/>} />
       </Routes>
     </div>
   )
