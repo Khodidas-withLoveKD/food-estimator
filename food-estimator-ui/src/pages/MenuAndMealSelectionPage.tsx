@@ -8,7 +8,6 @@ const MenuAndMealSelectionPage = () => {
   return (
     <div className={css({
       width: '90%',
-      minHeight: '80%',
       backgroundColor: 'cyan',
       margin: 'auto',
       display: 'flex',
