@@ -4,25 +4,15 @@ import axios from 'axios';
 import { useStyletron } from "baseui";
 import {MessageCard, IMAGE_LAYOUT} from 'baseui/message-card';
 import { daysOfTheWeek, mealTimes } from "../constants/constants";
-import { ISelect } from "../constants/interfaces";
+import { IFood, ISelect } from "../constants/interfaces";
 import { themeColors } from "../shared/theme";
-const baseUrl = 'http://localhost:10160/v1/food-estimator/'
-const employeeControllerUrl = baseUrl + 'employee/'
-
-
-interface IFood {
-  name: string;
-  imgUrl: string;
-  // foodDescription: string; // TODO: to add later
-  category: category;
-  rating: number;
-  personsRated: number;
-}
+import { employeeControllerUrl } from "./api";
 
 const mockFoodItem = {
+    foodId: 0,
     name: '',
     imgUrl: '',
-    // foodDescription: string; // TODO: to add later
+    foodDescription: "Pellentesque velit purus, luctus non lorem in, rutrum ultricies quam.",
     category: category.OTHERS,
     rating: 0,
     personsRated: 0
@@ -132,7 +122,7 @@ const MenuOfTheWeek = () => {
           {mealItems.length ? mealItems.map((food: IFood) =>          
             <MessageCard
               heading={food.name}
-              paragraph="Pellentesque velit purus, luctus non lorem in, rutrum ultricies quam."
+              paragraph={food.foodDescription}
               onClick={() => {}}
               image={{
                 src: food.imgUrl,

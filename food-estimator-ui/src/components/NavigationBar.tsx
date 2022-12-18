@@ -65,7 +65,7 @@ const NavigationBar = () => {
     }
     const setMenu = () => {
       return(
-        <span className={css(menuItemCss)}>
+        <span className={css(menuItemCss)} onClick={() => navigate(routingPath.SET_MENU)}>
           Set Menu
         </span>
       )

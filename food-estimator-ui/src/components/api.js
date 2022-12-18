@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 const baseUrl = 'http://localhost:10160/v1/food-estimator/'
-const employeeControllerUrl = baseUrl + 'employee/'
+export const employeeControllerUrl = baseUrl + 'employee/'
+export const adminControllerUrl = baseUrl + 'admin/'
 
 export const foodEstimatorAPIs = {
   getMenuOfTheWeek: () => {
