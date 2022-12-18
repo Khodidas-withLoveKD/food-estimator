@@ -97,7 +97,7 @@ const headCountMap = new Map([
        setMealHeadCount(currentHeadCountMap)
 
      })
-  }, [])
+  }, [mealHeadCount])
 
   const heading = () => (
     <div className={css({

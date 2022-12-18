@@ -11,7 +11,7 @@ import { catogeries } from "../constants/constants";
 
 const baseUrl = 'http://localhost:10160/v1/food-estimator/'
 const employeeControllerUrl = baseUrl + 'employee/'
-
+const adminControllerUrl = baseUrl + 'admin/'
 
 
 interface IFood {
@@ -53,15 +53,45 @@ const RatingPage = () => {
   const [sweets, setSweets] = useState<Array<IFood>>([mockFoodItem0,mockFoodItem1])
   const [others, setOthers] = useState<Array<IFood>>([mockFoodItem1,mockFoodItem0])
   const [selectedCatogery, setSelectedCatogery] = useState<string>(category.SABJI)
-  const [foodRating, setFoodRating] = useState<number>(4);
+  const [foodRating, setFoodRating] = useState<number>(4)
+  const [foodItems,setFoodItems] = useState<Array<IFood>>([mockFoodItem0])
 
   console.log('kd selectedCategory ', selectedCatogery)
   useEffect(() => {
-    // const url = employeeControllerUrl + 'get-menu-of-the-week'
-    //   axios.get(url).then((response) => {
-    //   })
+     const url = adminControllerUrl + `${selectedCatogery}/get-sorted-food-items-by-category-desc`
+       axios.get(url).then((response) => {
+        console.log("ResponseObjectRating:",response.data.responseObject)
+        setFoodItems(response.data.responseObject)
+
+        const responseArray: Array<IFood> = response.data.responseObject 
+
+        switch(selectedCatogery) {
+            case category.SALAD:
+                setSalad(foodItems)
+                break;
+            case category.BREAD:
+                setBread(foodItems)
+                break;
+            case category.SABJI:
+                setSabji(foodItems)
+                break;
+            case category.RICE:
+                setRice(foodItems)
+                break;
+            case category.APPETIZER:
+                setAppetizer(foodItems)
+                break;
+            case category.SWEETS:
+                setSweets(foodItems)
+                break;
+            default:
+                setOthers(foodItems)
+                break;       
+        }
+
+       })
     
-  }, [])
+  }, [selectedCatogery,foodItems])
 
   const renderFoodAsPerCatogery = () => {
 
@@ -69,7 +99,7 @@ const RatingPage = () => {
         const foodNotAvailable = () => <h4>food not added yet! :(</h4>
 
         const getCatogeryItems = (catogeryId: string) => {
-            let currentCatogeryItems: Array<IFood> = [mockFoodItem0]
+            let currentCatogeryItems: Array<IFood> = foodItems
             switch(catogeryId) {
                 case category.SALAD:
                     currentCatogeryItems = salad
