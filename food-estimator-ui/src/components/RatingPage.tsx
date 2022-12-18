@@ -58,7 +58,7 @@ const RatingPage = () => {
 
   console.log('kd selectedCategory ', selectedCatogery)
   useEffect(() => {
-     const url = adminControllerUrl + `${selectedCatogery}/get-sorted-food-items-by-category-desc`
+     const url = adminControllerUrl + `get-sorted-food-items-by-category-desc?category=${selectedCatogery}`
        axios.get(url).then((response) => {
         console.log("ResponseObjectRating:",response.data.responseObject)
         setFoodItems(response.data.responseObject)
