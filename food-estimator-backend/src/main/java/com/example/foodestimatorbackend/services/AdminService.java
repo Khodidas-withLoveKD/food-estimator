@@ -1,5 +1,6 @@
 package com.example.foodestimatorbackend.services;
 
+import com.example.foodestimatorbackend.constants.enums.Category;
 import com.example.foodestimatorbackend.model.entity.Food;
 import com.example.foodestimatorbackend.model.request.MenuRequest;
 import com.example.foodestimatorbackend.model.response.Response;
@@ -13,5 +14,7 @@ public interface AdminService {
     Response<String> editMenu(MenuRequest menuRequest);
 
     Response<List<Food>> getAllFoodItems();
+
+    Response<List<Food>> getFoodItemsOfCategorySortedByRating(Category category);
 
 }

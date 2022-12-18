@@ -1,5 +1,6 @@
 package com.example.foodestimatorbackend.services.impl;
 
+import com.example.foodestimatorbackend.constants.enums.Category;
 import com.example.foodestimatorbackend.constants.enums.Day;
 import com.example.foodestimatorbackend.constants.enums.Meal;
 import com.example.foodestimatorbackend.model.entity.Food;
@@ -121,6 +122,13 @@ public class AdminServiceImpl implements AdminService {
         Response<List<Food>> response = new Response<>();
         response.setResponseObject(foodRepository.findAll(Sort.by("category")));
 
+        return response;
+    }
+
+    @Override
+    public Response<List<Food>> getFoodItemsOfCategorySortedByRating(Category category) {
+        Response<List<Food>> response = new Response<>();
+        response.setResponseObject(foodRepository.findByCategoryOrderByRatingDesc(category));
         return response;
     }
 
