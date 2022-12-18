@@ -110,7 +110,7 @@ const MealSelectionPage = () => {
               {meal.label}
             </span>
           )
-        }
+          }
 
         return (
           <div className={css({

@@ -1,4 +1,4 @@
-import { day, meal } from "./Enums";
+import { category, day, meal } from "./Enums";
 
 export const daysOfTheWeek = [
   {
@@ -45,6 +45,38 @@ export const mealTimes = [
     id: meal.DINNER
   },
 ]
+
+export const catogeries = [
+  {
+    label: 'Salad',
+    id: category.SALAD
+  },
+  {
+    label: 'Bread',
+    id: category.BREAD
+  },
+  {
+    label: 'Sabji',
+    id: category.SABJI
+  },
+  {
+    label: 'Rice',
+    id: category.RICE
+  },
+  {
+    label: 'Appetizer',
+    id:category.APPETIZER
+  },
+  {
+    label:'Sweets',
+    id:category.SWEETS
+  },
+  {
+    label:'Others',
+    id:category.OTHERS
+  }
+]
+
 
 const baseUrl = 'http://localhost:10160/v1/food-estimator/'
 export const employeeBaseUrl = baseUrl + 'employee/'
