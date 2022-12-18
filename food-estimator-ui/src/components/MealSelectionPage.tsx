@@ -148,15 +148,9 @@ const MealSelectionPage = () => {
   const saveMenuSelection = async () => {
     const generatePayload = () => {
       const payload:any = {}
-      // for (let [key, value] of selectedMeal.entries()) {
-
-      // }
       selectedMeal.forEach((value, key) => {
-        console.log('kd key:', key)
-        console.log('kd value:', value)
         payload[key] = value
       })
-      console.log('kd payload:', payload)
       return {selectedOptions: payload}
     }
 
@@ -226,9 +220,6 @@ const MealSelectionPage = () => {
     }
 
     const postMenuSelectionUrl = employeeBaseUrl + `${employeeId}/selection`
-    // const result = await axios.post(postMenuSelectionUrl, payload)
-    // console.log(result)
-    generatePayload()
     axios.post(postMenuSelectionUrl, generatePayload()).then((response: any) => {
       // TODO: create Toaster
       showToaster()
