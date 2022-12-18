@@ -19,8 +19,6 @@ import java.util.ArrayList;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SelectionRequest {
 
-    private ArrayList<String> breakfast;
-    private ArrayList<String> lunch;
-    private ArrayList<String> dinner;
+    private Map<String,List<Boolean>> selectedOptions;;
 
 }

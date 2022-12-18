@@ -100,7 +100,7 @@ const MealSelectionPage = () => {
               borderRadius: '16px',
               cursor: 'pointer',
               width: 'min-content',
-              backgroundColor: 'palegoldenrod',
+              backgroundColor: 'pink',
               paddingTop: '5px',
               paddingBottom: '5px',
               paddingLeft: '10px',
@@ -125,7 +125,7 @@ const MealSelectionPage = () => {
 
       return (
         <div className={css({
-          backgroundColor: 'lime',
+          backgroundColor: 'pink',
           marginTop: '10px',
           textAlign: 'left',
           display: 'flex',
