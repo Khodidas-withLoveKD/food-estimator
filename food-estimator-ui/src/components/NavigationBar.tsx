@@ -58,7 +58,7 @@ const NavigationBar = () => {
     }
     const headCount = () => {
       return(
-        <span className={css(menuItemCss)}>
+        <span className={css(menuItemCss)} onClick={() => navigate(routingPath.HEAD_COUNT)}>
           Head Count
         </span>
       )

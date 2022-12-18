@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { employeeBaseUrl, daysOfTheWeek, mealTimes } from '../constants/constants';
 import { ISelect } from '../constants/interfaces';
 import { day, meal } from '../constants/Enums';
+import { arrayBuffer } from 'stream/consumers';
 
 
  
@@ -25,30 +26,89 @@ const headCountMap = new Map([
   const HeadCountPage = () => {
   const [css, theme] = useStyletron()
 
-  const [mealHeadCount, setMealHeadCount] = useState<Map<string, Array<number>>>(headCountMap)
+  const [mealHeadCount, setMealHeadCount] = useState<Map<String, Array<number>>>(headCountMap)
   console.log('HeadCount:', headCountMap)
   const mealToHeadCountMap = {
-    [meal.BREAKFAST]: 1,
-    [meal.LUCNH]: 2,
-    [meal.DINNER]: 3
+    [meal.BREAKFAST]: 0,
+    [meal.LUCNH]: 1,
+    [meal.DINNER]: 2
+  }
+
+  const dayStringToEnum = {
+    "MON":day.MON,
+    "TUE":day.TUE,
+    "WED":day.WED,
+    "THURS":day.THURS,
+    "FRI":day.FRI
+  }
+
+  const mealStringToEnum = (mealType: string) => {
+    let mealEnum;
+    switch(mealType) {
+        case "BREAKFAST": 
+            mealEnum = meal.BREAKFAST
+            break;
+        case "LUNCH":
+            mealEnum = meal.LUCNH
+            break;
+        case "DINNER":
+            mealEnum = meal.DINNER
+            break;
+        default:
+            mealEnum = meal.BREAKFAST
+            break;
+    }
+    return mealEnum;
   }
 
   // mealToIsSelectedMap[meal.BREAKFAST]
 
-  useEffect(() => {
-    const getHeadCountUrl = adminControllerUrl + 'getHeadCount'
-    axios.get(getHeadCountUrl).then((response) => {
-      // response.data.responseObject
-      console.log('kd response.data.responseObject:', response.data.responseObject)
-    })
+  useEffect(() => { 
+     const getHeadCountUrl = adminControllerUrl + 'getHeadCount'
+     axios.get(getHeadCountUrl).then((response) => {
+       console.log('kd response.data.responseObject:', response.data.responseObject)
+       const headCountResponse = response.data.responseObject
+       const currentHeadCountMap = new Map(mealHeadCount)
+       
+       const daysFromResponse :Array<String> = []
+    //    Object.keys(headCountResponse).forEach(function(key){
+    //         daysFromResponse.push(headCountResponse[key]);
+
+    //    })
+    for(const day in headCountResponse) {
+        console.log("Key from response:",day)
+        for(const mealType in headCountResponse[day]) {
+            console.log("MealType:",mealType)
+            const tempHeadCount = currentHeadCountMap.get(day) ?? []
+
+            console.log("CurrentheadCount:",tempHeadCount)
+            
+            // tempHeadCount[mealToHeadCountMap[mealStringToEnum[meal]] = headCountResponse[day][meal]
+            tempHeadCount[mealToHeadCountMap[mealStringToEnum(mealType)]] = headCountResponse[day][mealType]
+
+            console.log("NewTemp:",tempHeadCount)
+
+            currentHeadCountMap.set(day, tempHeadCount)
+
+        }
+    }
+       console.log("ResponseDay:",daysFromResponse)
+
+       setMealHeadCount(currentHeadCountMap)
+
+     })
   }, [])
 
   const heading = () => (
     <div className={css({
-      backgroundColor: 'pink'
+        paddingLeft: '100px',
+        paddingRight: '100px',
+        // flexGrow: 0.4,  
+        margin: 'auto',
+        width: "500px"
     })}>
       <span className={css({
-        fontSize: '60px',
+        fontSize: '40px',
         // color: themeColors.menuFontColor,
       })}>
         HeadCount
@@ -62,19 +122,55 @@ const headCountMap = new Map([
     mealTimes.map((meal:ISelect)=> mealTimeLables.push(meal.label))
 
     const createData = () => {
-        const headCountData = []
-        
+        const headCountData: string[][] = []
+
         daysOfTheWeek.map((day:ISelect)=>{
             const headCountDayWise = []
+            const headCountOfTheDay: Array<Number> = mealHeadCount.get(day.id) ?? []
             headCountDayWise.push(day.label)
-        })        
+            
+            console.log("HeadCount of the day:",headCountOfTheDay)
+            mealTimes.forEach(meal=> { console.log("meal_id:",meal.id) ;headCountDayWise.push(headCountOfTheDay[mealToHeadCountMap[meal.id]])})
+            
+            headCountData.push(headCountDayWise)
+            console.log("Day Wise HeadCount:",headCountDayWise)
+        })
+        
+        return headCountData;
 
     }
     return (
-      <div>
+      <div className = {css({
+        paddingLeft: '100px',
+        paddingRight: '100px',
+        paddingBottom: '100px',
+        // flexGrow: 0.4,  
+        margin: 'auto',
+        width: "500px"
+      })}>
            <Table
             columns = {mealTimeLables}
-            size={SIZE.spacious}/>
+            data = {createData()}
+            size={SIZE.compact}
+            overrides={{
+                Table: {
+                    style: ({ $theme }) => ({
+                        outline: `${$theme.colors.warning200} solid`,
+                        backgroundColor: $theme.colors.warning200,
+                        width: "100px"
+                      })
+                //   style: {
+                //     width: '500px'
+                //   }
+                }
+                // TableBody: {
+                //   style: ({ $theme }) => ({
+                //     outline: `${$theme.colors.warning200} solid`,
+                //     backgroundColor: $theme.colors.warning200
+                //   })
+                // }
+              }}        
+            />
        </div>
     )
 }
@@ -84,8 +180,8 @@ const headCountMap = new Map([
       paddingLeft: '30px',
       paddingRight: '30px',
       paddingBottom: '20px',
-      flexGrow: 0.4,
-      backgroundColor: 'grey',
+    //   flexGrow: 0.4,
+    //   backgroundColor: 'light blue',
       position: 'sticky', // TODO: make position sticky work
       top: '100px'
     })}>

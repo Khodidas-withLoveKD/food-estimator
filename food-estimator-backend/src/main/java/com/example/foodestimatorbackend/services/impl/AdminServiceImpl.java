@@ -38,11 +38,54 @@ public class AdminServiceImpl implements AdminService {
         headCountFromDB = headCountRepository.getHeadCount();
 
         Map<String,Map<String,Integer>> headCount = new HashMap<>();
-        Map<String,Integer>mealCount = new HashMap<>();
+        Map<String,Integer> mealCountMon = new HashMap<>();
+        Map<String,Integer> mealCountTue = new HashMap<>();
+        Map<String,Integer> mealCountWed = new HashMap<>();
+        Map<String,Integer> mealCountThur = new HashMap<>();
+        Map<String,Integer> mealCountFri = new HashMap<>();
+
         headCountFromDB.forEach(jsonObject -> {
-            mealCount.put(jsonObject.get("meal").toString(), Integer.valueOf(jsonObject.get("count").toString()));
-//            mealCount.put(jsonObject.get("meal").toString(), jsonObject.get("count").size());
-            headCount.put(jsonObject.get("day").toString(), mealCount);
+//            if(!jsonObject.get("day").toString().equals(previousDay)) {
+////                mealCount.remove();
+//                mealCount = new HashMap<>();
+//            }
+////            Map<String,Integer>mealCount = new HashMap<>();
+////            mealCount.put(jsonObject.get("meal").toString(), Integer.valueOf(jsonObject.get("count").toString()));
+////            mealCount.put(jsonObject.get("meal").toString(), jsonObject.get("count").size());
+//
+//
+//            Map<String,Integer> currentMealCount = new HashMap<String,Integer>(headCount.get(jsonObject.get("day").toString()));
+//
+//
+
+//            headCount.put(jsonObject.get("day").toString(), jsonObject.get("day").toString(), Integer.valueOf(jsonObject.get("count").toString()));
+            String day = jsonObject.get("day").toString();
+
+            switch (day) {
+                case "MON":
+                    mealCountMon.put(jsonObject.get("meal").toString(), Integer.valueOf(jsonObject.get("count").toString()));
+                    headCount.put(jsonObject.get("day").toString(), mealCountMon);
+                    break;
+                case "TUE":
+                    mealCountTue.put(jsonObject.get("meal").toString(), Integer.valueOf(jsonObject.get("count").toString()));
+                    headCount.put(jsonObject.get("day").toString(), mealCountTue);
+                    break;
+                case "WED":
+                    mealCountWed.put(jsonObject.get("meal").toString(), Integer.valueOf(jsonObject.get("count").toString()));
+                    headCount.put(jsonObject.get("day").toString(), mealCountWed);
+                    break;
+                case "THURS":
+                    mealCountThur.put(jsonObject.get("meal").toString(), Integer.valueOf(jsonObject.get("count").toString()));
+                    headCount.put(jsonObject.get("day").toString(), mealCountThur);
+                    break;
+                default:
+                    mealCountFri.put(jsonObject.get("meal").toString(), Integer.valueOf(jsonObject.get("count").toString()));
+                    headCount.put(jsonObject.get("day").toString(), mealCountFri);
+                    break;
+
+
+            }
+
         });
 
         Response<Map<String,Map<String,Integer>>> response = new Response<>(headCount);
