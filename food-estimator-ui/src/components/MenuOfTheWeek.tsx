@@ -4,50 +4,56 @@ import axios from 'axios';
 import { useStyletron } from "baseui";
 import {MessageCard, IMAGE_LAYOUT} from 'baseui/message-card';
 import { daysOfTheWeek, mealTimes } from "../constants/constants";
-import { ISelect } from "../constants/interfaces";
+import { IFood, ISelect } from "../constants/interfaces";
 import { themeColors } from "../shared/theme";
-const baseUrl = 'http://localhost:10160/v1/food-estimator/'
-const employeeControllerUrl = baseUrl + 'employee/'
-
-
-interface IFood {
-  name: string;
-  imgUrl: string;
-  // foodDescription: string; // TODO: to add later
-  category: category;
-  rating: number;
-  personsRated: number;
-}
+import { employeeControllerUrl } from "./api";
 
 const mockFoodItem = {
+    foodId: 0,
     name: '',
     imgUrl: '',
-    // foodDescription: string; // TODO: to add later
+    foodDescription: "Pellentesque velit purus, luctus non lorem in, rutrum ultricies quam.",
     category: category.OTHERS,
     rating: 0,
     personsRated: 0
 }
 
-const MenuOfTheWeek = () => {
+interface IMenuOfTheWeek {
+  menuOfTheWeekCount?: number;
+  selectedDayOfMenu?: string;
+}
+
+const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
+  const { menuOfTheWeekCount = 0, selectedDayOfMenu = day.MON } = props
   const [css, theme] = useStyletron()
 
   const [menu, setMenu] = useState<any>()
   const [breakfastOfTheDay, setBreakfastOfTheDay] = useState<Array<IFood>>([mockFoodItem])
   const [lunchOfTheDay, setLunchOfTheDay] = useState<Array<IFood>>([mockFoodItem])
   const [dinnerOfTheDay, setDinnerOfTheDay] = useState<Array<IFood>>([mockFoodItem])
-  const [selectedDay, setSelectedDay] = useState<string>(day.MON)
+  const [selectedDay, setSelectedDay] = useState<string>(selectedDayOfMenu)
   
-  useEffect(() => {
+  const getMenuOfTheWeek = () => {
     const url = employeeControllerUrl + 'get-menu-of-the-week'
       axios.get(url).then((response) => {
         setMenu(response.data.responseObject)
       })
-    
-  }, [])
+  }
+
+  // TODO: check if this ok
+  // useEffect(() => {
+  //   getMenuOfTheWeek()
+  // }, [])
 
   useEffect(() => {
-    // on change of selectedDay
-    // get that days menu
+    getMenuOfTheWeek()
+  }, [menuOfTheWeekCount, ])
+
+  useEffect(() => {
+    setSelectedDay(selectedDayOfMenu)
+  }, [selectedDayOfMenu])
+
+  useEffect(() => {
     if (menu) {
       setBreakfastOfTheDay(menu[selectedDay][meal.BREAKFAST])
       setLunchOfTheDay(menu[selectedDay][meal.LUCNH])
@@ -56,6 +62,8 @@ const MenuOfTheWeek = () => {
   }, [selectedDay, menu])
 
   const renderDaysOfTheWeek = () => {
+    const selectedCss = (dayId: string) => ( selectedDay === dayId ? {backgroundColor: 'cyan'} : {})
+
     const renderEachDay = (day: ISelect) => (
       <span className={css({
         borderRadius: '16px',
@@ -68,7 +76,8 @@ const MenuOfTheWeek = () => {
         ':hover' : {
           textDecoration: 'underline',
           textDecorationColor: themeColors.primary
-        }
+        },
+        ...selectedCss(day.id)
       })} onClick={() => setSelectedDay(day.id)}>
         {day.label}
       </span>
@@ -132,7 +141,7 @@ const MenuOfTheWeek = () => {
           {mealItems.length ? mealItems.map((food: IFood) =>          
             <MessageCard
               heading={food.name}
-              paragraph="Pellentesque velit purus, luctus non lorem in, rutrum ultricies quam."
+              paragraph={food.foodDescription}
               onClick={() => {}}
               image={{
                 src: food.imgUrl,
