@@ -19,4 +19,7 @@ public interface AdminService {
 
     Response<List<Food>> getFoodItemsOfCategorySortedByRatingAsc(Category category);
 
+    Response<List<Food>> getAllFoodItemsSortedByRatingDesc();
+    Response<List<Food>> getAllFoodItemsSortedByRatingAsc();
+    Response<List<Food>> getAllFoodItemsSortedByDateDesc();
 }
