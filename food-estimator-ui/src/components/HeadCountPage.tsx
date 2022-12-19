@@ -63,8 +63,8 @@ const headCountMap = new Map([
 
   // mealToIsSelectedMap[meal.BREAKFAST]
 
-  useEffect(() => { 
-     const getHeadCountUrl = adminControllerUrl + 'getHeadCount'
+  const calculateNewHeadCount = () => {
+    const getHeadCountUrl = adminControllerUrl + 'getHeadCount'
      axios.get(getHeadCountUrl).then((response) => {
        console.log('kd response.data.responseObject:', response.data.responseObject)
        const headCountResponse = response.data.responseObject
@@ -97,7 +97,16 @@ const headCountMap = new Map([
        setMealHeadCount(currentHeadCountMap)
 
      })
-  }, [mealHeadCount])
+  }
+
+  useEffect(() => { 
+    calculateNewHeadCount()
+  }, [])
+
+//   useEffect(() => {
+//     console.log('kd INSIDE USEEFFECT')
+//     calculateNewHeadCount()
+//   },[])
 
   const heading = () => (
     <div className={css({
