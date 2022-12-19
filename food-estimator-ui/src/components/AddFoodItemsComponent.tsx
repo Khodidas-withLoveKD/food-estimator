@@ -5,7 +5,7 @@ import { firebaseStorage } from '../shared/firebaseConfig'
 import { ref, uploadBytes, list } from 'firebase/storage'
 import uuid from 'react-uuid'
 
-const AddFoodItems = () => {
+const AddFoodItemsComponent = () => {
   const [css, theme] = useStyletron()
   const [isUploading, setIsUploading] = useState<boolean>(false)
   const [uploadedImageUrl, setImageUrl] = useState<string>()
@@ -17,14 +17,16 @@ const AddFoodItems = () => {
     const uploadFoodImageToFirebase = (imageToBeUploaded: any) => {
       setIsUploading(true)
       const uniqueImageName = imageToBeUploaded.name + uuid()
-      const imageUploadedUrlRef = ref(firebaseStorage, uniqueImageName)
-
+      
       const imageRef = ref(firebaseStorage, uniqueImageName)
+      console.log('kd imageRef:', imageRef)
       uploadBytes(imageRef, imageToBeUploaded).then((response) => {
-        console.log('kd response:', response.metadata)
-        console.log('kd response:', response.ref)
+        console.log('kd response METADATA:', response.metadata)
+        console.log('kd response REF:', response.ref)
         alert('Food Item Uploaded')
         setIsUploading(false)
+
+        const imageUploadedUrlRef = ref(firebaseStorage)
         list(imageUploadedUrlRef).then((repsonse) => {
           console.log('kd imageUploadedUrlRef repsonse:', repsonse)
         })
@@ -73,4 +75,4 @@ const AddFoodItems = () => {
   )
 } 
 
-export default AddFoodItems;
+export default AddFoodItemsComponent;

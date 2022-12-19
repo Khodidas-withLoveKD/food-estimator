@@ -8,7 +8,7 @@ import MenuAndMealSelectionPage from './pages/MenuAndMealSelectionPage';
 import HeadCountPage from './components/HeadCountPage';
 import RatingPage from './components/RatingPage';
 import SetMenuAndMenuOfTheWeekPage from './pages/SetMenuAndMenuOfTheWeekPage';
-import AddFoodItems from './pages/AddFoodItems';
+import AddFoodItemsPage from './pages/AddFoodItemsPage';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
         <Route path={routingPath.HEAD_COUNT} element={<HeadCountPage/>} />
         <Route path={routingPath.TOP_FOOD} element={<RatingPage/>} />
         <Route path={routingPath.SET_MENU} element={<SetMenuAndMenuOfTheWeekPage/>} />
-        <Route path={routingPath.ADD_FOOD_ITEMS} element={<AddFoodItems/>} />
+        <Route path={routingPath.ADD_FOOD_ITEMS} element={<AddFoodItemsPage/>} />
       </Routes>
     </div>
   )
