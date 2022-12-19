@@ -3,6 +3,7 @@ package com.example.foodestimatorbackend.controller;
 import com.example.foodestimatorbackend.constants.enums.ApiPathConstants;
 import com.example.foodestimatorbackend.constants.enums.Category;
 import com.example.foodestimatorbackend.model.entity.Food;
+import com.example.foodestimatorbackend.model.request.FoodRequest;
 import com.example.foodestimatorbackend.model.request.MenuRequest;
 import com.example.foodestimatorbackend.model.response.Response;
 import com.example.foodestimatorbackend.services.AdminService;
@@ -62,6 +63,12 @@ public class AdminController {
     @GetMapping(value = ApiPathConstants.GET_ALL_FOOD_ITEMS_SORTED_BY_DATE_DESC)
     public Response<List<Food>> getAllFoodItemsSortedByDateDesceding() {
         return adminService.getAllFoodItemsSortedByDateDesc();
+    }
+
+    @PostMapping(value = ApiPathConstants.ADD_FOOD)
+    public Response<String> addFood(@RequestBody FoodRequest foodRequest)
+    {
+        return adminService.addFood(foodRequest);
     }
 
 }
