@@ -2,6 +2,7 @@ package com.example.foodestimatorbackend.services;
 
 import com.example.foodestimatorbackend.constants.enums.Category;
 import com.example.foodestimatorbackend.model.entity.Food;
+import com.example.foodestimatorbackend.model.request.FoodRequest;
 import com.example.foodestimatorbackend.model.request.MenuRequest;
 import com.example.foodestimatorbackend.model.response.Response;
 
@@ -22,4 +23,5 @@ public interface AdminService {
     Response<List<Food>> getAllFoodItemsSortedByRatingDesc();
     Response<List<Food>> getAllFoodItemsSortedByRatingAsc();
     Response<List<Food>> getAllFoodItemsSortedByDateDesc();
+    Response<String> addFood(FoodRequest foodRequest);
 }

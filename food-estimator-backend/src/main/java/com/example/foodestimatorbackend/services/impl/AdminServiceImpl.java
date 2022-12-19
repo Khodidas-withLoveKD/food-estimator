@@ -4,6 +4,7 @@ import com.example.foodestimatorbackend.constants.enums.Category;
 import com.example.foodestimatorbackend.constants.enums.Day;
 import com.example.foodestimatorbackend.constants.enums.Meal;
 import com.example.foodestimatorbackend.model.entity.Food;
+import com.example.foodestimatorbackend.model.request.FoodRequest;
 import com.example.foodestimatorbackend.model.request.MenuRequest;
 import com.example.foodestimatorbackend.model.response.Response;
 import com.example.foodestimatorbackend.repository.FoodRepository;
@@ -158,5 +159,29 @@ public class AdminServiceImpl implements AdminService {
         Response<List<Food>> response = new Response<>();
         response.setResponseObject(foodRepository.findAll(Sort.by("createdAt").descending()));
         return response;
+    }
+
+    @Override
+    @Transactional
+    public Response<String> addFood(FoodRequest foodRequest) {
+
+        String name =foodRequest.getName();
+        String description = foodRequest.getDescription();
+        String imgUrl = foodRequest.getImg_url();
+        Category category = foodRequest.getCategory();
+
+        Response<String> response = new Response<>();
+
+        try {
+            foodRepository.insertIntoFood(name, category.toString(), imgUrl, description);
+            response.setResponseObject("Food is added successfully");
+        }
+        catch (Exception e) {
+            log.error("Exception occurred while adding food:{}",e.getMessage());
+            response.setResponseObject("Food could not be added");
+        }
+
+        return response;
+
     }
 }
