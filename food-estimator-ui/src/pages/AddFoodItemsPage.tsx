@@ -1,5 +1,6 @@
 import { useStyletron } from "baseui";
 import AddFoodItemsComponent from "../components/AddFoodItemsComponent";
+import FoodItemsOrderByDate from "../components/FoodItemsOrderByDate";
 
 const AddFoodItemsPage = () => {
   const [css, theme] = useStyletron()
@@ -13,6 +14,7 @@ const AddFoodItemsPage = () => {
       justifyContent: 'center'
     })}>
       <AddFoodItemsComponent />
+      <FoodItemsOrderByDate/>
     </div>
   )
 } 

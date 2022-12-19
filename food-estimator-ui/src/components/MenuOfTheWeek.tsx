@@ -15,7 +15,8 @@ const mockFoodItem = {
     foodDescription: "Pellentesque velit purus, luctus non lorem in, rutrum ultricies quam.",
     category: category.OTHERS,
     rating: 0,
-    personsRated: 0
+    personsRated: 0,
+    date: new Date()
 }
 
 interface IMenuOfTheWeek {
@@ -136,7 +137,7 @@ const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
         <div className={css({
           display: 'flex',
           flexWrap: 'wrap',
-          justifyContent: 'space-between',
+          justifyContent: 'space-around'
         })}>
           {mealItems.length ? mealItems.map((food: IFood) =>          
             <MessageCard
