@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigInteger;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -119,6 +120,34 @@ public class EmployeeServiceImpl implements EmployeeService {
       finalList.put(jsonObject.get("day").toString(), jsonObject.get("meal").toString());
     });
     Response<HashMap<String, String>> response = new Response<>(finalList);
+    return response;
+
+  }
+
+  @Override
+  public Response<HashMap<String, String>> getAdminStatus(int employee_id) {
+
+    Response<HashMap<String,String>> response = new Response<>();
+
+    try {
+      Map<String, String> employeeDetails = employeeRepository.getAdminStatus(employee_id);
+      HashMap<String,String> finalResult = new HashMap<>();
+      finalResult.put("employee_id",employeeDetails.get("employee_id").toString());
+
+      if(employeeDetails.get("is_admin").equals("0"))
+      {
+        finalResult.put("is_admin","False");
+      }
+      else {
+        finalResult.put("is_admin","True");
+      }
+      response.setResponseObject(finalResult);
+    }
+    catch (Exception e) {
+      log.error("Exception occurred while fetching admin status from DB");
+      response.setResponseObject(null);
+    }
+
     return response;
 
   }
