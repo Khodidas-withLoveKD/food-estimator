@@ -12,7 +12,7 @@ import {  ArrowUp,ArrowDown} from "baseui/icon";
 
 const baseUrl = 'http://localhost:10160/v1/food-estimator/'
 const adminControllerUrl = baseUrl + 'admin/'
-const ratingUrlAll = adminControllerUrl + ''
+const ratingUrlAll = adminControllerUrl + 'get-all-food-items-sorted-by-rating'
 const ratingUrlCatogery = adminControllerUrl + 'get-sorted-food-items-by-category'
 
 interface IFood {
@@ -122,64 +122,28 @@ const RatingPage = () => {
     })    
 
     
-  }, [selectedCatogery,foodItems])
+  }, [selectedCatogery,isAscending])
 
   const renderFoodAsPerCatogery = () => {
 
     const renderCatogeryItems = (catogeryId:string) =>{
         const foodNotAvailable = () => <h4>food not added yet! :(</h4>
-
-        const getCatogeryItems = (catogeryId: string) => {
-            let currentCatogeryItems: Array<IFood> = foodItems
-            switch(catogeryId) {
-                case category.SALAD:
-                    currentCatogeryItems = salad
-                    break;
-                case category.BREAD:
-                    currentCatogeryItems = bread
-                    break;
-                case category.SABJI:
-                    currentCatogeryItems = sabji
-                    break;
-                case category.RICE:
-                    currentCatogeryItems = rice
-                    break;
-                case category.APPETIZER:
-                    currentCatogeryItems = appetizer
-                    break;
-                case category.SWEETS:
-                    currentCatogeryItems = sweets
-                    break;
-                case category.OTHERS:
-                    currentCatogeryItems = others
-                    break;
-                default:
-                    currentCatogeryItems = all
-                    break;
-              }
-              return currentCatogeryItems
-          }
     
-        const catogeryItems = getCatogeryItems(catogeryId)
+        const catogeryItems: Array<IFood> = foodItems
         
-        const getfoodRating = (foodRated:number, personsRated:number) =>{
-            //setFoodRating(foodRated)
-            return (
+        const getfoodRating = (foodRated:number, personsRated:number) => (
             <div className={css({
                 display: 'flex',
             })}>
-              <StarRating
+                <StarRating
                 numItems={5}
-                // onChange=}
                 size={12}
                 value={foodRated}
-              />
-              <span>{foodRated} | {personsRated}</span>
-              </div>
+                />
+                <span>{foodRated} | {personsRated}</span>
+                </div>
             );
           
-        }
-
         return (
             <div className={css({
               display: 'flex',
