@@ -112,13 +112,11 @@ const headCountMap = new Map([
     <div className={css({
         paddingLeft: '100px',
         paddingRight: '100px',
-        // flexGrow: 0.4,  
         margin: 'auto',
         width: "500px"
     })}>
       <span className={css({
         fontSize: '40px',
-        // color: themeColors.menuFontColor,
       })}>
         HeadCount
       </span>

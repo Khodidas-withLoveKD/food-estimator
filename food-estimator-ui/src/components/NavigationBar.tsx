@@ -1,8 +1,21 @@
 import { useStyletron } from 'baseui';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { routingPath } from '../constants/RoutingPaths';
 import { themeColors } from "../shared/theme";
+
+
+let employee_id = localStorage.getItem("employee_id")
+let isAdminState: Boolean
+
+console.log("AdminValue:",localStorage.getItem("is_admin"))
+if (localStorage.getItem("is_admin") === "False") {
+  isAdminState = false
+}
+else{
+  isAdminState = true
+}
 
 const NavigationBar = () => {
   // TODO: add theme styling support
@@ -84,14 +97,13 @@ const NavigationBar = () => {
         </span>
       )
     }
-
     return (
       <div style={menuCss}>
-        {menuOfTheWeek()}
-        {topFoods()}
-        {headCount()}
-        {setMenu()}
-        {addFoodItems()}
+        {!isAdminState && menuOfTheWeek()}
+        {!isAdminState && topFoods()}
+        {isAdminState && headCount()}
+        {isAdminState && setMenu()}
+        {isAdminState && addFoodItems()}
       </div>
     )
   }
