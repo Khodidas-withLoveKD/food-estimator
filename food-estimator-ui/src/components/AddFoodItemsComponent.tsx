@@ -2,35 +2,27 @@ import { useStyletron } from "baseui";
 import {FileUploader} from 'baseui/file-uploader';
 import { useState } from 'react';
 import { firebaseStorage } from '../shared/firebaseConfig'
-import { ref, uploadBytes, list } from 'firebase/storage'
+import { ref, uploadBytes, list, getDownloadURL } from 'firebase/storage'
 import uuid from 'react-uuid'
 
 const AddFoodItemsComponent = () => {
   const [css, theme] = useStyletron()
   const [isUploading, setIsUploading] = useState<boolean>(false)
   const [uploadedImageUrl, setImageUrl] = useState<string>()
-  console.log('kd uploadedImageUrl:', uploadedImageUrl)
   
   const uploadFoodImage = () => {
-    // const generateImageUrl = (fileName: string, downloadToken: string) => `https://firebasestorage.googleapis.com/v0/b/food-estimator.appspot.com/o/${fileName}?alt=media&token=${downloadToken}`
-    
     const uploadFoodImageToFirebase = (imageToBeUploaded: any) => {
       setIsUploading(true)
       const uniqueImageName = imageToBeUploaded.name + uuid()
       
       const imageRef = ref(firebaseStorage, uniqueImageName)
-      console.log('kd imageRef:', imageRef)
       uploadBytes(imageRef, imageToBeUploaded).then((response) => {
-        console.log('kd response METADATA:', response.metadata)
-        console.log('kd response REF:', response.ref)
-        alert('Food Item Uploaded')
         setIsUploading(false)
-
-        const imageUploadedUrlRef = ref(firebaseStorage)
-        list(imageUploadedUrlRef).then((repsonse) => {
-          console.log('kd imageUploadedUrlRef repsonse:', repsonse)
+        alert('Food Item Uploaded')
+        
+        getDownloadURL(imageRef).then((repsonse) => {
+          setImageUrl(repsonse)
         })
-        // setImageUrl(generateImageUrl(response.metadata.name, response.metadata.downloadTokens?[0] ?? ''))
       })
     }
 
