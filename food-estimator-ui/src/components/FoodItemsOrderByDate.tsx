@@ -6,11 +6,12 @@ import {MessageCard, IMAGE_LAYOUT} from 'baseui/message-card';
 import { IFood, ISelect } from "../constants/interfaces";
 import { themeColors } from "../shared/theme";
 import * as React from "react";
-import { catogeries } from "../constants/constants";
+import { categories } from "../constants/constants";
 
 const baseUrl = 'http://localhost:10160/v1/food-estimator/'
 const adminControllerUrl = baseUrl + 'admin/'
 const foodByDateUrlAll = adminControllerUrl + 'get-all-food-items-sorted-by-date-desc'
+const foodByDateUrlCategory = adminControllerUrl + 'get-food-items-by-category-sorted-by-date-desc'
 
 const mockFoodItem0 = {
     foodId: 1,
@@ -57,7 +58,8 @@ const FoodItemsOrderByDate = () =>{
                 url = foodByDateUrlAll
                 break;
             default:
-                url = foodByDateUrlAll
+                url = foodByDateUrlCategory
+                url = url + `?category=${selectedCatogery}`
                 break;
         }
     
@@ -182,7 +184,7 @@ const FoodItemsOrderByDate = () =>{
               paddingLeft: '10px',
               paddingRight: '10px'
             })}>
-              {catogeries.map((categorySelection: ISelect) => 
+              {categories.map((categorySelection: ISelect) => 
                 renderEachCatogery(categorySelection)
               )}
             </div>
