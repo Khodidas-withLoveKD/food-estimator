@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -29,4 +31,7 @@ public class Food {
 
   @Column(name = "food_description")
   private String foodDescription;
+
+  @Column(name = "created_at")
+  private LocalDateTime createdAt;
 }

@@ -77,7 +77,13 @@ const NavigationBar = () => {
         </span>
       )
     }
-
+    const addFoodItems = () => {
+      return(
+        <span className={css(menuItemCss)} onClick={() => navigate(routingPath.ADD_FOOD_ITEMS)}>
+          Add Food Items
+        </span>
+      )
+    }
 
     return (
       <div style={menuCss}>
@@ -85,6 +91,7 @@ const NavigationBar = () => {
         {topFoods()}
         {headCount()}
         {setMenu()}
+        {addFoodItems()}
       </div>
     )
   }

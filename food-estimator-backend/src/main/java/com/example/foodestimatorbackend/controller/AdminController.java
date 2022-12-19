@@ -48,4 +48,20 @@ public class AdminController {
     public Response<List<Food>> getFoodItemsOfCategorySortedByRatingAsc(@RequestParam Category category) {
         return adminService.getFoodItemsOfCategorySortedByRatingAsc(category);
     }
+
+    @GetMapping(value = ApiPathConstants.GET_ALL_FOOD_ITEMS_SORTED_BY_RATING_DESC)
+    public Response<List<Food>> getAllFoodItemsSortedByRatingDescending() {
+        return adminService.getAllFoodItemsSortedByRatingDesc();
+    }
+
+    @GetMapping(value = ApiPathConstants.GET_ALL_FOOD_ITEMS_SORTED_BY_RATING_ASC)
+    public Response<List<Food>> getAllFoodItemsSortedByRatingAscending() {
+        return adminService.getAllFoodItemsSortedByRatingAsc();
+    }
+
+    @GetMapping(value = ApiPathConstants.GET_ALL_FOOD_ITEMS_SORTED_BY_DATE_DESC)
+    public Response<List<Food>> getAllFoodItemsSortedByDateDesceding() {
+        return adminService.getAllFoodItemsSortedByDateDesc();
+    }
+
 }

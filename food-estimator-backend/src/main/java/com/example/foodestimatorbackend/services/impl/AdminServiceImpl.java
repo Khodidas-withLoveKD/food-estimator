@@ -139,4 +139,24 @@ public class AdminServiceImpl implements AdminService {
         return response;
     }
 
+    @Override
+    public Response<List<Food>> getAllFoodItemsSortedByRatingDesc() {
+        Response<List<Food>> response = new Response<>();
+        response.setResponseObject(foodRepository.findAll(Sort.by("rating").descending()));
+        return response;
+    }
+
+    @Override
+    public Response<List<Food>> getAllFoodItemsSortedByRatingAsc() {
+        Response<List<Food>> response = new Response<>();
+        response.setResponseObject(foodRepository.findAll(Sort.by("rating").ascending()));
+        return response;
+    }
+
+    @Override
+    public Response<List<Food>> getAllFoodItemsSortedByDateDesc() {
+        Response<List<Food>> response = new Response<>();
+        response.setResponseObject(foodRepository.findAll(Sort.by("createdAt").descending()));
+        return response;
+    }
 }

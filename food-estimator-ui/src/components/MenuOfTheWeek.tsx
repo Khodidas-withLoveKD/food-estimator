@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { category, day, meal } from "../constants/Enums";
 import axios from 'axios';
 import { useStyletron } from "baseui";
-import {MessageCard, IMAGE_LAYOUT} from 'baseui/message-card';
+import {MessageCard} from 'baseui/message-card';
 import { daysOfTheWeek, mealTimes } from "../constants/constants";
 import { IFood, ISelect } from "../constants/interfaces";
 import { themeColors } from "../shared/theme";
