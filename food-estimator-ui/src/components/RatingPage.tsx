@@ -3,7 +3,7 @@ import { category } from "../constants/Enums";
 import axios from 'axios';
 import { useStyletron } from "baseui";
 import {MessageCard, IMAGE_LAYOUT} from 'baseui/message-card';
-import { ISelect } from "../constants/interfaces";
+import { ISelect, IFood } from "../constants/interfaces";
 import { themeColors } from "../shared/theme";
 import * as React from "react";
 import { StarRating } from "baseui/rating";
@@ -15,31 +15,26 @@ const adminControllerUrl = baseUrl + 'admin/'
 const ratingUrlAll = adminControllerUrl + 'get-all-food-items-sorted-by-rating'
 const ratingUrlCatogery = adminControllerUrl + 'get-sorted-food-items-by-category'
 
-interface IFood {
-  name: string;
-  imgUrl: string;
-  // foodDescription: string; // TODO: to add later
-  category: category;
-  rating: number;
-  personsRated: number;
-}
-
 const mockFoodItem0 = {
+    foodId: 1,
     name: 'Bhindi Masala',
     imgUrl: 'https://firebasestorage.googleapis.com/v0/b/food-estimator.appspot.com/o/Bhindi-Masala.jpg?alt=media&token=8df87616-a555-46dc-9d93-e92d18e183a6',
-    // foodDescription: string; // TODO: to add later
+    foodDescription: "hgghugubg",
     category: category.SABJI,
     rating: 4.5,
-    personsRated: 3500
+    personsRated: 3500,
+    date: new Date()
 }
 
 const mockFoodItem1 = {
+    foodId: 2,
     name: 'Peanut Salad',
     imgUrl: 'https://firebasestorage.googleapis.com/v0/b/food-estimator.appspot.com/o/boiled-peanut-salad-featured.jpg?alt=media&token=092f3e35-02d5-42b4-ab59-fe80f6af92c7',
-    // foodDescription: string; // TODO: to add later
+    foodDescription: "aaaaa",
     category: category.SALAD,
     rating: 4,
-    personsRated: 2500
+    personsRated: 2500,
+    date: new Date()
 }
 
 
