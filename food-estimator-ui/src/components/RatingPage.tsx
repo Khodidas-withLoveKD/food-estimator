@@ -7,7 +7,7 @@ import { ISelect, IFood } from "../constants/interfaces";
 import { themeColors } from "../shared/theme";
 import * as React from "react";
 import { StarRating } from "baseui/rating";
-import { catogeries } from "../constants/constants";
+import { categories } from "../constants/constants";
 import {  ArrowUp,ArrowDown} from "baseui/icon";
 
 const baseUrl = 'http://localhost:10160/v1/food-estimator/'
@@ -233,7 +233,7 @@ const RatingPage = () => {
           paddingLeft: '10px',
           paddingRight: '10px'
         })}>
-          {catogeries.map((categorySelection: ISelect) => 
+          {categories.map((categorySelection: ISelect) => 
             renderEachCatogery(categorySelection)
           )}
           {orderArrow()}
