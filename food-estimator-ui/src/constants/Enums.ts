@@ -15,6 +15,7 @@ export enum meal {
 }
 
 export enum category {
+  ALL = 'ALL',
   SALAD = 'SALAD',
   SABJI = 'SABJI',
   RICE = 'RICE',

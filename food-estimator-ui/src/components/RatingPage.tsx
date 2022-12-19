@@ -8,11 +8,12 @@ import { themeColors } from "../shared/theme";
 import * as React from "react";
 import { StarRating } from "baseui/rating";
 import { catogeries } from "../constants/constants";
+import {  ArrowUp,ArrowDown} from "baseui/icon";
 
 const baseUrl = 'http://localhost:10160/v1/food-estimator/'
-const employeeControllerUrl = baseUrl + 'employee/'
 const adminControllerUrl = baseUrl + 'admin/'
-
+const ratingUrlAll = adminControllerUrl + 'get-all-food-items-sorted-by-rating'
+const ratingUrlCatogery = adminControllerUrl + 'get-sorted-food-items-by-category'
 
 interface IFood {
   name: string;
@@ -52,19 +53,46 @@ const RatingPage = () => {
   const [appetizer, setAppetizer] = useState<Array<IFood>>([mockFoodItem1,mockFoodItem0])
   const [sweets, setSweets] = useState<Array<IFood>>([mockFoodItem0,mockFoodItem1])
   const [others, setOthers] = useState<Array<IFood>>([mockFoodItem1,mockFoodItem0])
-  const [selectedCatogery, setSelectedCatogery] = useState<string>(category.SABJI)
+  const [all, setAll] = useState<Array<IFood>>([mockFoodItem1,mockFoodItem0])
+  const [selectedCatogery, setSelectedCatogery] = useState<string>(category.ALL)
   const [foodRating, setFoodRating] = useState<number>(4)
   const [foodItems,setFoodItems] = useState<Array<IFood>>([mockFoodItem0])
+  const [isAscending,setIsAscending] = useState<boolean>(false)
 
   console.log('kd selectedCategory ', selectedCatogery)
   useEffect(() => {
-     const url = adminControllerUrl + `get-sorted-food-items-by-category-desc?category=${selectedCatogery}`
-       axios.get(url).then((response) => {
+
+    let url:string = ratingUrlAll
+
+    switch(selectedCatogery) {
+        case category.ALL:
+            url = ratingUrlAll
+            switch(isAscending) {
+                case true:
+                    url = url + `-asc`;
+                    break;
+                default:
+                    url = url + `-desc`;
+                    break;
+            }        
+            break;
+        default:
+            url = ratingUrlCatogery
+            switch(isAscending) {
+                case true:
+                    url = url + `-asc?category=${selectedCatogery}`;
+                    break;
+                default:
+                    url = url + `-desc?category=${selectedCatogery}`;
+                    break;
+            }        
+            break;
+    }
+
+    axios.get(url).then((response) => {
         console.log("ResponseObjectRating:",response.data.responseObject)
         setFoodItems(response.data.responseObject)
-
-        const responseArray: Array<IFood> = response.data.responseObject 
-
+     
         switch(selectedCatogery) {
             case category.SALAD:
                 setSalad(foodItems)
@@ -84,73 +112,43 @@ const RatingPage = () => {
             case category.SWEETS:
                 setSweets(foodItems)
                 break;
-            default:
+            case category.OTHERS:
                 setOthers(foodItems)
+                break;   
+            default:    
+                setAll(foodItems);
                 break;       
-        }
+             }
+    })    
 
-       })
     
-  }, [selectedCatogery,foodItems])
+  }, [selectedCatogery,isAscending])
 
   const renderFoodAsPerCatogery = () => {
 
     const renderCatogeryItems = (catogeryId:string) =>{
         const foodNotAvailable = () => <h4>food not added yet! :(</h4>
-
-        const getCatogeryItems = (catogeryId: string) => {
-            let currentCatogeryItems: Array<IFood> = foodItems
-            switch(catogeryId) {
-                case category.SALAD:
-                    currentCatogeryItems = salad
-                    break;
-                case category.BREAD:
-                    currentCatogeryItems = bread
-                    break;
-                case category.SABJI:
-                    currentCatogeryItems = sabji
-                    break;
-                case category.RICE:
-                    currentCatogeryItems = rice
-                    break;
-                case category.APPETIZER:
-                    currentCatogeryItems = appetizer
-                    break;
-                case category.SWEETS:
-                    currentCatogeryItems = sweets
-                    break;
-                default:
-                    currentCatogeryItems = others
-                    break;
-              }
-              return currentCatogeryItems
-          }
     
-        const catogeryItems = getCatogeryItems(catogeryId)
+        const catogeryItems: Array<IFood> = foodItems
         
-        const getfoodRating = (foodRated:number, personsRated:number) =>{
-            //setFoodRating(foodRated)
-            return (
+        const getfoodRating = (foodRated:number, personsRated:number) => (
             <div className={css({
                 display: 'flex',
             })}>
-              <StarRating
+                <StarRating
                 numItems={5}
-                // onChange=}
                 size={12}
                 value={foodRated}
-              />
-              <span>{foodRated} | {personsRated}</span>
-              </div>
+                />
+                <span>{foodRated} | {personsRated}</span>
+                </div>
             );
           
-        }
-
         return (
             <div className={css({
               display: 'flex',
               flexWrap: 'wrap',
-              justifyContent: 'space-between',
+              justifyContent: 'space-around'
             })}>
               {catogeryItems.length ? catogeryItems.map((food: IFood) =>          
                 <MessageCard
@@ -214,7 +212,20 @@ const RatingPage = () => {
           {catogerySelection.label}
         </span>
       )
-  
+    
+    const orderArrow =() =>(
+
+        <div className={css({
+            cursor:'pointer'
+          })}
+          onClick={()=> setIsAscending(!isAscending)}
+        >
+            {
+                isAscending ? <ArrowDown size={30} /> : <ArrowUp size={30}/>
+            }
+        </div>
+    )
+
     return (
         <div className={css({
           display: 'flex',
@@ -230,6 +241,7 @@ const RatingPage = () => {
           {catogeries.map((categorySelection: ISelect) => 
             renderEachCatogery(categorySelection)
           )}
+          {orderArrow()}
         </div>
       )
   
@@ -242,7 +254,7 @@ const RatingPage = () => {
       paddingLeft: '30px',
       paddingRight: '30px',
       paddingBottom: '20px',
-      width: '60%',
+      width: '96%',
       backgroundColor: 'pink',
       textAlign: 'left',
     })}>
