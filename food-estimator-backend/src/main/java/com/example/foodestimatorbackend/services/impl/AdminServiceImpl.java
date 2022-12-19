@@ -184,4 +184,11 @@ public class AdminServiceImpl implements AdminService {
         return response;
 
     }
+
+    @Override
+    public Response<List<Food>> getFoodByCategorySortedByDateDesc(Category category) {
+        Response<List<Food>> response = new Response<>();
+        response.setResponseObject(foodRepository.findByCategoryOrderByCreatedAtDesc(category));
+        return response;
+    }
 }

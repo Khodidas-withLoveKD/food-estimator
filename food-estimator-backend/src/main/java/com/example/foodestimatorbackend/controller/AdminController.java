@@ -71,4 +71,8 @@ public class AdminController {
         return adminService.addFood(foodRequest);
     }
 
+    @GetMapping(value = ApiPathConstants.GET_FOOD_ITEMS_BY_CATEGORY_SORTED_BY_DATE_DESC)
+    public Response<List<Food>> getFoodItemsByCategorySortedByDateDesc(@RequestParam Category category) {
+        return adminService.getFoodByCategorySortedByDateDesc(category);
+    }
 }

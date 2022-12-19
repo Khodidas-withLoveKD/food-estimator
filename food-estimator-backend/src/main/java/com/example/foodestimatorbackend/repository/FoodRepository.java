@@ -22,4 +22,6 @@ public interface FoodRepository extends JpaRepository<Food, Integer> {
   @Query(value = "insert into food(name,category, img_url, food_description) values(:name, :category, :imgUrl, :foodDescription)", nativeQuery = true)
   void insertIntoFood(@Param("name") String name, @Param("category") String category,
                       @Param("imgUrl") String imgUrl, @Param("foodDescription") String foodDescription);
+
+  List<Food> findByCategoryOrderByCreatedAtDesc(@Param("category") Category category);
 }
