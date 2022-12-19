@@ -72,7 +72,7 @@ const NavigationBar = () => {
     }
     const topFoods = () => {
       return(
-        <span className={css(menuItemCss)}>
+        <span className={css(menuItemCss)} onClick={() => navigate(routingPath.TOP_FOOD)}>
           Top Foods
         </span>
       )
