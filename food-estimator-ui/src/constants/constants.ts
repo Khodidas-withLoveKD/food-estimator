@@ -46,11 +46,42 @@ export const mealTimes = [
   },
 ]
 
-export const catogeries = [
+export const categories = [
   {
     label: 'All Foods',
     id:category.ALL
   },
+  {
+    label: 'Salad',
+    id: category.SALAD
+  },
+  {
+    label: 'Bread',
+    id: category.BREAD
+  },
+  {
+    label: 'Sabji',
+    id: category.SABJI
+  },
+  {
+    label: 'Rice',
+    id: category.RICE
+  },
+  {
+    label: 'Appetizer',
+    id:category.APPETIZER
+  },
+  {
+    label:'Sweets',
+    id:category.SWEETS
+  },
+  {
+    label:'Others',
+    id:category.OTHERS
+  }
+]
+
+export const categoriesWithoutAllCategory = [
   {
     label: 'Salad',
     id: category.SALAD
