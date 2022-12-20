@@ -2,6 +2,7 @@ import { useStyletron } from "baseui";
 import { useState } from "react";
 import MenuOfTheWeek from "../components/MenuOfTheWeek";
 import SetMenu from "../components/SetMenu";
+import { layoutCss } from "../constants/commonCss";
 import { day } from "../constants/Enums";
 
 const SetMenuAndMenuOfTheWeekPage = () => {
@@ -11,13 +12,7 @@ const SetMenuAndMenuOfTheWeekPage = () => {
   const [selectedDayOfMenu, setSelectedDayOfMenu] = useState<string>(day.MON)
 
   return (
-    <div className={css({
-      width: '90%',
-      backgroundColor: 'cyan',
-      margin: 'auto',
-      display: 'flex',
-      justifyContent: 'center'
-    })}>
+    <div className={css(layoutCss)}>
       <SetMenu menuOfTheWeekCount={menuOfTheWeekCount} incrementMenuOfTheWeekCount={incrementMenuOfTheWeekCount} setSelectedDayOfMenu={setSelectedDayOfMenu} />
       <MenuOfTheWeek menuOfTheWeekCount={menuOfTheWeekCount} selectedDayOfMenu={selectedDayOfMenu}/>
     </div>

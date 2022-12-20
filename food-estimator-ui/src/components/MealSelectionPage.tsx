@@ -13,6 +13,8 @@ import {
   ToasterContainer,
   PLACEMENT
 } from "baseui/toast";
+import { containerCss, hoverItemCss, leftPanelCss, selectedItemCss } from '../constants/commonCss';
+import { themeColors } from '../shared/theme';
 
 const selectedMealsMap = new Map([
   [day.MON, [false, false, false]],
@@ -54,24 +56,19 @@ const MealSelectionPage = () => {
   }, [])
 
   const heading = () => (
-    <div className={css({
-      backgroundColor: 'pink'
+    <h3 className={css({
+      textDecoration: 'underline'
     })}>
-      <span className={css({
-        fontSize: '20px',
-        // color: themeColors.menuFontColor,
-        textDecoration: 'underline'
-      })}>
-        Meal Selection
-      </span>
-    </div>
+      Meal Selection
+    </h3>
   )
 
   const mealSelection = () => {
     const renderDayAndMeal = (day: ISelect) => {
       const dayOfTheWeek = (day: ISelect) => (
         <span className={css({
-          width: '45px'
+          width: '45px',
+          fontWeight: 700
         })}>
           {day.label}
         </span>
@@ -92,7 +89,7 @@ const MealSelectionPage = () => {
           const isSelected = (mealId: meal) => {
            return mealOfTheDay[mealToIsSelectedMap[mealId]]
           }
-          const isSelectedCss = (mealId: any) => isSelected(mealId) ? { backgroundColor: 'cyan' } : {}
+          const selectedCss = (mealId: any) => isSelected(mealId) ? selectedItemCss : { backgroundColor: themeColors.notSelectedColor}
           
           return mealTimes.map((meal: ISelect) => 
             <span className={css({
@@ -100,12 +97,14 @@ const MealSelectionPage = () => {
               borderRadius: '16px',
               cursor: 'pointer',
               width: 'min-content',
-              backgroundColor: 'pink',
               paddingTop: '5px',
               paddingBottom: '5px',
               paddingLeft: '10px',
               paddingRight: '10px',
-              ...isSelectedCss(meal.id)
+              ':hover': {
+                ...hoverItemCss
+              },
+              ...selectedCss(meal.id)
             })} onClick={() => markMeal(meal, day)}>
               {meal.label}
             </span>
@@ -125,7 +124,6 @@ const MealSelectionPage = () => {
 
       return (
         <div className={css({
-          backgroundColor: 'pink',
           marginTop: '10px',
           textAlign: 'left',
           display: 'flex',
@@ -154,90 +152,27 @@ const MealSelectionPage = () => {
       return {selectedOptions: payload}
     }
 
-    const showToaster = () => {
-      console.log('kd INSIDE showToaster:')
-      return <ToasterContainer placement={PLACEMENT.bottomLeft}>
-      <Button
-        onClick={() => {
-          let toastKey: any;
-          const msg =
-            "Your Meal preference has been saved. See you at the table :)";
-          const ok = (
-            <Block
-              marginTop="15px"
-              display="flex"
-              justifyContent="center"
-            >
-              <Button
-                size={SIZE.compact}
-                onClick={() => toaster.clear(toastKey)}
-              >
-                Ok
-              </Button>
-            </Block>
-          );
-          // const showMore = (
-          //   <Block
-          //     marginTop="15px"
-          //     display="flex"
-          //     justifyContent="left"
-          //   >
-          //     <Button
-          //       size={SIZE.compact}
-          //       onClick={() =>
-          //         toaster.update(toastKey, {
-          //           children: (
-          //             <>
-          //               {msg} to show different
-          //               notification type. {ok}
-          //             </>
-          //           )
-          //         })
-          //       }
-          //     >
-          //       Show more
-          //     </Button>
-          //   </Block>
-          // );
-          toastKey = toaster.info(
-            <>
-              {msg}
-            </>,
-            {
-              onClose: () => console.log("Toast closed."),
-              overrides: {
-                InnerContainer: {
-                  style: { width: "100%" }
-                }
-              }
-            }
-          );
-        }}
-      >
-        Show notification
-      </Button>
-    </ToasterContainer>
-    }
-
     const postMenuSelectionUrl = employeeBaseUrl + `${employeeId}/selection`
     axios.post(postMenuSelectionUrl, generatePayload()).then((response: any) => {
       // TODO: create Toaster
-      showToaster()
+      alert('Preference saved :)')
     })
   }
 
-  const submitButton = () => <Button onClick={() => saveMenuSelection()}>Submit</Button>
+  const submitButton = () => (
+    <div className={css({
+      float: 'right',
+      marginTop: '15px',
+      marginRight: '20px'
+    })}>
+      <Button size={SIZE.compact} onClick={() => saveMenuSelection()}>Submit</Button>
+    </div>
+  )
 
   return (
     <div className={css({
-      paddingTop: '20px',
-      paddingLeft: '30px',
-      paddingRight: '30px',
-      paddingBottom: '20px',
-      flexGrow: 0.4,
-      backgroundColor: 'grey',
-      position: 'sticky', // TODO: make position sticky work OR make right thing scroll inside;
-      top: '100px'
+      ...containerCss,
+      ...leftPanelCss,
     })}>
       {heading()}
       {mealSelection()}

@@ -7,6 +7,7 @@ import { Select, Value } from "baseui/select";
 import { daysOfTheWeek, mealTimes } from "../constants/constants";
 import { category, day, meal } from "../constants/Enums";
 import { Button, SIZE } from "baseui/button";
+import { containerCss, leftPanelCss } from "../constants/commonCss";
 
 interface ISetMenu {
   menuOfTheWeekCount: number;
@@ -26,14 +27,14 @@ const SetMenu = (props: ISetMenu) => {
 
   const [foodOptions, setFoodOptions] = useState<any>()
 
-  const statelessFoodOptions = {
-    Salads: [{}],
-    Sabji: [{}],
-    Breads: [{}],
-    Rice: [{}],
-    Sweets: [{}],
-    Appetizers: [{}],
-    Other: [{}]
+  const statelessFoodOptions:any = {
+    Salads: [],
+    Sabji: [],
+    Breads: [],
+    Rice: [],
+    Sweets: [],
+    Appetizers: [],
+    Other: []
   }
 
   useEffect(() => {
@@ -217,10 +218,8 @@ const SetMenu = (props: ISetMenu) => {
 
   return (
     <div className={css({
-      paddingRight: '50px',
-      paddingLeft: '50px',
-      width: '25%',
-      backgroundColor: 'lime'
+      ...containerCss,
+      ...leftPanelCss
     })}>
       {heading()}
       {daySelect()}

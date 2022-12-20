@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route path={routingPath.MENU_OF_THE_WEEK_AND_MEAL_SELECTION_PAGE} element={ <MenuAndMealSelectionPage />} />
         <Route path={routingPath.HEAD_COUNT} element={<HeadCountPage/>} />
-        <Route path={routingPath.TOP_FOOD} element={<RatingPage/>} />
+        <Route path={routingPath.TOP_FOODS} element={<RatingPage/>} />
         <Route path={routingPath.SET_MENU} element={<SetMenuAndMenuOfTheWeekPage/>} />
         <Route path={routingPath.ADD_FOOD_ITEMS} element={<AddFoodItemsPage/>} />
       </Routes>

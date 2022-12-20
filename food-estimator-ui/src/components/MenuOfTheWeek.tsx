@@ -7,6 +7,7 @@ import { daysOfTheWeek, mealTimes } from "../constants/constants";
 import { IFood, ISelect } from "../constants/interfaces";
 import { themeColors } from "../shared/theme";
 import { employeeControllerUrl } from "./api";
+import { containerCss, hoverItemCss, rightPanelCss, selectedItemCss } from "../constants/commonCss";
 
 const mockFoodItem = {
     foodId: 0,
@@ -41,14 +42,9 @@ const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
       })
   }
 
-  // TODO: check if this ok
-  // useEffect(() => {
-  //   getMenuOfTheWeek()
-  // }, [])
-
   useEffect(() => {
     getMenuOfTheWeek()
-  }, [menuOfTheWeekCount, ])
+  }, [menuOfTheWeekCount])
 
   useEffect(() => {
     setSelectedDay(selectedDayOfMenu)
@@ -63,7 +59,7 @@ const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
   }, [selectedDay, menu])
 
   const renderDaysOfTheWeek = () => {
-    const selectedCss = (dayId: string) => ( selectedDay === dayId ? {backgroundColor: 'cyan'} : {})
+    const selectedCss = (dayId: string) => ( selectedDay === dayId ? selectedItemCss : {})
 
     const renderEachDay = (day: ISelect) => (
       <span className={css({
@@ -75,8 +71,7 @@ const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
         cursor: 'pointer',
         boxShadow: '0px 1.95px 2.6px rgba(0, 0, 0, 0.15)',
         ':hover' : {
-          textDecoration: 'underline',
-          textDecorationColor: themeColors.primary
+          ...hoverItemCss
         },
         ...selectedCss(day.id)
       })} onClick={() => setSelectedDay(day.id)}>
@@ -89,10 +84,6 @@ const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-evenly',
-        marginTop: '10px',
-        marginBottom: '10px',
-        marginLeft: '10px',
-        marginRight: '10px',
       })}>
         {daysOfTheWeek.map((day: ISelect) => 
           renderEachDay(day)
@@ -106,7 +97,8 @@ const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
       <div className={css({
         fontSize: '20px',
         fontWeight: 700,
-        marginBottom: '10px'
+        marginBottom: '10px',
+        display: 'flex'
       })}>
         {mealLabel}
       </div>
@@ -137,7 +129,6 @@ const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
         <div className={css({
           display: 'flex',
           flexWrap: 'wrap',
-          justifyContent: 'space-around'
         })}>
           {mealItems.length ? mealItems.map((food: IFood) =>          
             <MessageCard
@@ -151,7 +142,7 @@ const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
               }}
               // backgroundColor={colors.teal200}
               overrides={{
-                Root: {style: {marginBottom: '20px', minWidth: '200px', width: '30%', cursor: 'default'}},
+                Root: {style: {marginBottom: '20px', marginRight: '25px', minWidth: '200px', width: '30%', cursor: 'default'}},
                 HeadingContainer: {style: {fontSize: '17px'}}
               }
             }
@@ -165,7 +156,7 @@ const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
       <div>
         {mealTimes.map((meal: ISelect) => 
           <div className={css({
-            padding: '20px'
+            padding: '20px',
           })}>
             {mealHeading(meal.label)}
             {renderMealItems(meal.id)}
@@ -175,16 +166,22 @@ const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
     )
   }
 
+  const heading = () => (
+    <h3 className={css({
+      textDecoration: 'underline',
+      textAlign: 'center',
+      marginTop: '-2px'
+    })}>
+      Menu of The Week
+    </h3>
+  )
+
   return (
     <div className={css({
-      paddingTop: '20px',
-      paddingLeft: '30px',
-      paddingRight: '30px',
-      paddingBottom: '20px',
-      width: '60%',
-      backgroundColor: 'pink',
-      textAlign: 'left',
+      ...containerCss,
+     ...rightPanelCss
     })}>
+      {heading()}
       {renderDaysOfTheWeek()}
       {menu && renderMenuAsPerMealTime()}
     </div>

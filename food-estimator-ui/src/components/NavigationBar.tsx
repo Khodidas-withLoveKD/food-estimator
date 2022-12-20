@@ -1,5 +1,7 @@
 import { useStyletron } from 'baseui';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { selectedItemCss } from '../constants/commonCss';
 
 import { routingPath } from '../constants/RoutingPaths';
 import { themeColors } from "../shared/theme";
@@ -8,6 +10,8 @@ const NavigationBar = () => {
   // TODO: add theme styling support
 
   const [css, theme] = useStyletron()
+  const [selectedOption, setOption] = useState<string>()
+  console.log('kd selectedOption:', selectedOption)
   const navigate = useNavigate()
 
   const navCss = {
@@ -16,7 +20,7 @@ const NavigationBar = () => {
     backgroundColor: themeColors.primary,
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   }
 
   const foodEstimatorLogo = () => {
@@ -32,6 +36,19 @@ const NavigationBar = () => {
     )
   }
 
+  const selectedMenuItemCss: any = {
+    textDecoration: 'underline',
+    textUnderlineOffset: '12px'
+  }
+
+  enum menuItemOptions {
+    HUNGRY = 'HUNGRY',
+    TOP_FOODS = 'TOP_FOODS',
+    HEAD_COUNT = 'HEAD_COUNT',
+    SET_MENU = 'SET_MENU',
+    ADD_FOOD_ITEMS = 'ADD_FOOD_ITEMS'
+  }
+
   const menuItems = () => {
     const menuCss = {
       display: 'flex',
@@ -41,45 +58,66 @@ const NavigationBar = () => {
       fontWeight: 500,
     }
     
-    const menuItemCss = {
-      color: themeColors.menuFontColor,
+    const menuItemCss = (menuLabel: string) => {
+      const selectedCss = () => menuLabel === selectedOption ? selectedMenuItemCss : {}
+
+      return {color: themeColors.menuFontColor,
       cursor: 'pointer',
       ':hover' : {
-        textDecoration: 'underline'
-      }
+        ...selectedMenuItemCss
+      },
+      ...selectedCss()
+    }
     }
     
     const menuOfTheWeek = () => {
       return(
-        <span className={css(menuItemCss)} onClick={() => navigate(routingPath.MENU_OF_THE_WEEK_AND_MEAL_SELECTION_PAGE)}>
+        <>
+        <span className={css(menuItemCss(menuItemOptions.HUNGRY))} onClick={() => {
+          setOption(menuItemOptions.HUNGRY)
+          navigate(routingPath.MENU_OF_THE_WEEK_AND_MEAL_SELECTION_PAGE)}
+        }>
           Hungry?
         </span>
+        </>
       )
     }
     const headCount = () => {
       return(
-        <span className={css(menuItemCss)} onClick={() => navigate(routingPath.HEAD_COUNT)}>
+        <span className={css(menuItemCss(menuItemOptions.HEAD_COUNT))} onClick={() => {
+          setOption(menuItemOptions.HEAD_COUNT)
+          navigate(routingPath.HEAD_COUNT)
+        }}>
           Head Count
         </span>
       )
     }
     const setMenu = () => {
       return(
-        <span className={css(menuItemCss)} onClick={() => navigate(routingPath.SET_MENU)}>
+        <span className={css(menuItemCss(menuItemOptions.SET_MENU))} onClick={() => {
+          setOption('Set Menu')
+          navigate(routingPath.SET_MENU)
+        }}>
           Set Menu
         </span>
       )
     }
     const topFoods = () => {
       return(
-        <span className={css(menuItemCss)} onClick={() => navigate(routingPath.TOP_FOOD)}>
+        <span className={css(menuItemCss(menuItemOptions.TOP_FOODS))} onClick={() => {
+          setOption(menuItemOptions.TOP_FOODS)
+          navigate(routingPath.TOP_FOODS)
+        }}>
           Top Foods
         </span>
       )
     }
     const addFoodItems = () => {
       return(
-        <span className={css(menuItemCss)} onClick={() => navigate(routingPath.ADD_FOOD_ITEMS)}>
+        <span className={css(menuItemCss(menuItemOptions.ADD_FOOD_ITEMS))} onClick={() => {
+          setOption(menuItemOptions.ADD_FOOD_ITEMS)
+          navigate(routingPath.ADD_FOOD_ITEMS)
+        }}>
           Add Food Items
         </span>
       )
@@ -97,7 +135,7 @@ const NavigationBar = () => {
   }
 
   return (
-    <div style={navCss}>
+    <div className={css(navCss)}>
       {foodEstimatorLogo()}
       {menuItems()}
     </div>

@@ -1,18 +1,13 @@
 import { useStyletron } from "baseui";
 import MealSelectionPage from "../components/MealSelectionPage";
 import MenuOfTheWeek from "../components/MenuOfTheWeek";
+import { layoutCss } from "../constants/commonCss";
 
 const MenuAndMealSelectionPage = () => {
   const [css, theme] = useStyletron()
 
   return (
-    <div className={css({
-      width: '90%',
-      backgroundColor: 'cyan',
-      margin: 'auto',
-      display: 'flex',
-      justifyContent: 'center'
-    })}>
+    <div className={css(layoutCss)}>
       <MealSelectionPage />
       <MenuOfTheWeek />
     </div>

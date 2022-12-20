@@ -12,7 +12,7 @@ import { Button } from "baseui/button";
 import { category } from "../constants/Enums";
 import { adminControllerUrl } from "./api";
 import axios from 'axios';
-
+import { containerCss, leftPanelCss } from "../constants/commonCss";
 
 
 const AddFoodItemsComponent = () => {
@@ -162,10 +162,8 @@ const AddFoodItemsComponent = () => {
 
   return (
     <div className={css({
-      paddingRight: '50px',
-      paddingLeft: '50px',
-      width: '25%',
-      backgroundColor: 'lime'
+      ...containerCss,
+      ...leftPanelCss
     })}>
       {heading()}
       {name()}

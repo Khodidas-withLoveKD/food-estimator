@@ -7,6 +7,7 @@ import { IFood, ISelect } from "../constants/interfaces";
 import { themeColors } from "../shared/theme";
 import * as React from "react";
 import { categories } from "../constants/constants";
+import { containerCss, hoverItemCss, rightPanelCss, selectedItemCss } from "../constants/commonCss";
 
 const baseUrl = 'http://localhost:10160/v1/food-estimator/'
 const adminControllerUrl = baseUrl + 'admin/'
@@ -64,7 +65,6 @@ const FoodItemsOrderByDate = () =>{
         }
     
         axios.get(url).then((response) => {
-            console.log("ResponseObjectRating:",response.data.responseObject)
             setFoodItems(response.data.responseObject)
          
             switch(selectedCatogery) {
@@ -108,12 +108,11 @@ const FoodItemsOrderByDate = () =>{
                 <div className={css({
                   display: 'flex',
                   flexWrap: 'wrap',
-                  justifyContent: 'space-around'
                 })}>
                   {catogeryItems.length ? catogeryItems.map((food: IFood) =>          
                     <MessageCard
                       heading={food.name}
-                      paragraph="Pellentesque velit purus, luctus non lorem in, rutrum ultricies quam."
+                      paragraph={food.foodDescription}
                       onClick={() => {}}
                       image={{
                         src: food.imgUrl,
@@ -121,9 +120,9 @@ const FoodItemsOrderByDate = () =>{
                         ariaLabel:
                           'A woman hiking through a valley with a yellow backpack',
                       }}
-                      // backgroundColor={colors.teal200}
+                      // backgroundColor={'#F2F8FB'}
                       overrides={{
-                        Root: {style: {marginBottom: '20px', minWidth: '200px', width: '30%', cursor: 'default'}},
+                        Root: {style: {marginBottom: '20px', marginRight: '25px', minWidth: '200px', width: '30%', cursor: 'default'}},
                         HeadingContainer: {style: {fontSize: '17px'}}
                       }
                     }
@@ -149,7 +148,7 @@ const FoodItemsOrderByDate = () =>{
 
     const renderCatogeriesOfTheFood = () =>{
         const isSelectedCss = (catogeryId:string) =>(
-            selectedCatogery == catogeryId ? { backgroundColor: 'cyan' } : {}
+            selectedCatogery === catogeryId ? {...selectedItemCss} : {}
         )
     
         const renderEachCatogery = (catogerySelection: ISelect) => (
@@ -161,10 +160,9 @@ const FoodItemsOrderByDate = () =>{
               paddingLeft: '10px',
               paddingRight: '10px',
               cursor: 'pointer',
-              boxShadow: '0px 1.95px 2.6px rgba(0, 0, 0, 0.15)',
+              boxShadow: '0px 1.95px 2px rgba(0, 0, 0, 0.15)',
               ':hover' : {
-                textDecoration: 'underline',
-                textDecorationColor: themeColors.primary
+                ...hoverItemCss
               },
               ...isSelectedCss(catogerySelection.id)
             })} onClick={() => setSelectedCatogery(catogerySelection.id)}>
@@ -192,17 +190,23 @@ const FoodItemsOrderByDate = () =>{
       
     
       }
+      
+      const heading = () => (
+        <h3 className={css({
+          textDecoration: 'underline',
+          textAlign: 'center',
+          marginTop: '-2px'
+        })}>
+          Current Food Items
+        </h3>
+      )
     
     return (
         <div className={css({
-            paddingTop: '20px',
-            paddingLeft: '30px',
-            paddingRight: '30px',
-            paddingBottom: '20px',
-            width: '96%',
-            backgroundColor: 'pink',
-            textAlign: 'left',
+            ...containerCss,
+            ...rightPanelCss
           })}>
+            {heading()}
             {renderCatogeriesOfTheFood()}
             {renderFoodAsPerCatogery()}
           </div>             

@@ -9,6 +9,7 @@ import * as React from "react";
 import { StarRating } from "baseui/rating";
 import { categories } from "../constants/constants";
 import {  ArrowUp,ArrowDown} from "baseui/icon";
+import { containerCss, hoverItemCss, selectedItemCss } from "../constants/commonCss";
 
 const baseUrl = 'http://localhost:10160/v1/food-estimator/'
 const adminControllerUrl = baseUrl + 'admin/'
@@ -143,7 +144,6 @@ const RatingPage = () => {
             <div className={css({
               display: 'flex',
               flexWrap: 'wrap',
-              justifyContent: 'space-around'
             })}>
               {catogeryItems.length ? catogeryItems.map((food: IFood) =>          
                 <MessageCard
@@ -159,7 +159,7 @@ const RatingPage = () => {
                   }}
                   // backgroundColor={colors.teal200}
                   overrides={{
-                    Root: {style: {marginBottom: '20px', minWidth: '200px', width: '30%', cursor: 'default'}},
+                    Root: {style: {marginBottom: '20px', marginRight: '25px', minWidth: '100px', width: '300px', cursor: 'default'}},
                     HeadingContainer: {style: {fontSize: '17px'}}
                   }
                 }
@@ -185,7 +185,7 @@ const RatingPage = () => {
 
   const renderCatogeriesOfTheFood = () =>{
     const isSelectedCss = (catogeryId:string) =>(
-        selectedCatogery == catogeryId ? { backgroundColor: 'cyan' } : {}
+        selectedCatogery === catogeryId ? selectedItemCss : {}
     )
 
     const renderEachCatogery = (catogerySelection: ISelect) => (
@@ -199,8 +199,7 @@ const RatingPage = () => {
           cursor: 'pointer',
           boxShadow: '0px 1.95px 2.6px rgba(0, 0, 0, 0.15)',
           ':hover' : {
-            textDecoration: 'underline',
-            textDecorationColor: themeColors.primary
+            ...hoverItemCss
           },
           ...isSelectedCss(catogerySelection.id)
         })} onClick={() => setSelectedCatogery(catogerySelection.id)}>
@@ -227,7 +226,6 @@ const RatingPage = () => {
           alignItems: 'center',
           justifyContent: 'space-evenly',
           marginTop: '10px',
-          marginBottom: '10px',
           marginLeft: '10px',
           marginRight: '10px',
           paddingLeft: '10px',
@@ -238,21 +236,24 @@ const RatingPage = () => {
           )}
           {orderArrow()}
         </div>
-      )
-  
-
+    )
   }
+
+  const heading = () => (
+    <h2 className={css({
+      textDecoration: 'underline',
+      textAlign: 'center',
+    })}>
+      Top Foods
+    </h2>
+  )
 
   return (
     <div className={css({
-      paddingTop: '20px',
-      paddingLeft: '30px',
-      paddingRight: '30px',
-      paddingBottom: '20px',
-      width: '96%',
-      backgroundColor: 'pink',
-      textAlign: 'left',
+      margin: 'auto',
+      width: '90%',
     })}>
+      {heading()}
       {renderCatogeriesOfTheFood()}
       {renderFoodAsPerCatogery()}
     </div>
