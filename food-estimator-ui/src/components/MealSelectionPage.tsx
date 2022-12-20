@@ -6,13 +6,7 @@ import { employeeBaseUrl, daysOfTheWeek, mealTimes, employeeId } from '../consta
 import { ISelect } from '../constants/interfaces';
 import { day, meal } from '../constants/Enums';
 import { Button, SIZE } from 'baseui/button';
-import { Block } from "baseui/block";
 
-import {
-  toaster,
-  ToasterContainer,
-  PLACEMENT
-} from "baseui/toast";
 import { containerCss, hoverItemCss, leftPanelCss, selectedItemCss } from '../constants/commonCss';
 import { themeColors } from '../shared/theme';
 
@@ -56,11 +50,11 @@ const MealSelectionPage = () => {
   }, [])
 
   const heading = () => (
-    <h5 className={css({
+    <h3 className={css({
       textDecoration: 'underline'
     })}>
       Meal Selection
-    </h5>
+    </h3>
   )
 
   const mealSelection = () => {
