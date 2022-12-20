@@ -56,11 +56,11 @@ const MealSelectionPage = () => {
   }, [])
 
   const heading = () => (
-    <h3 className={css({
+    <h5 className={css({
       textDecoration: 'underline'
     })}>
       Meal Selection
-    </h3>
+    </h5>
   )
 
   const mealSelection = () => {

@@ -12,9 +12,9 @@ import AddFoodItemsPage from './pages/AddFoodItemsPage';
 import HomePage from './pages/HomePage';
 
 const employee_id = localStorage.getItem("employee_id")
-console.log("Employee_id",employee_id)
 
 function App() {
+  // window.location.href =  employee_id ?'http://localhost:3000/login' : ''
   return (
     <div className="App">
       {employee_id ? <NavigationBar /> : <HomePage/>}

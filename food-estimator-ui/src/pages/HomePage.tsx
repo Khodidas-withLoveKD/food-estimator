@@ -1,10 +1,9 @@
 import axios from "axios";
 import { useStyletron } from "baseui";
-import { Button } from "baseui/button";
-import { FormControl } from "baseui/form-control";
-import { Input, SIZE } from "baseui/input";
 import { useEffect, useState } from "react";
 import { employeeBaseUrl } from "../constants/constants";
+import { useNavigate } from 'react-router-dom';
+
 import React from 'react';
 import {
   MDBBtn,
@@ -19,12 +18,16 @@ import {
 } 
 from 'mdb-react-ui-kit';
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
+import { routingPath } from "../constants/RoutingPaths";
+import { Input, SIZE } from "baseui/input";
 
 const HomePage = () => {
      const [css, theme] = useStyletron()
+    const navigate = useNavigate()
+
 
     const [employeeId, setEmployeeId] = useState<any>(null);
-    const[isAdmin, setIsAdmin] = useState<string>('');
+    const [isAdmin, setIsAdmin] = useState<string>('');
     
     const setAdminStatusAndEmployeeId = () => {
         
@@ -35,10 +38,17 @@ const HomePage = () => {
             setIsAdmin(response.data.responseObject.is_admin)
             localStorage.setItem('employee_id', employeeId.toString());
             localStorage.setItem('is_admin',response.data.responseObject.is_admin)
-            window.location.reload()    
         })
 
     };
+
+    useEffect(() => {
+      console.log('kd isAdmin:', isAdmin)
+      if (isAdmin) {
+        navigate( isAdmin === 'True' ? routingPath.SET_MENU : routingPath.MENU_OF_THE_WEEK_AND_MEAL_SELECTION_PAGE)
+        window.location.reload()
+      } else navigate(routingPath.LOGIN)
+    }, [isAdmin])
 
     return (
     <MDBContainer breakpoint="sm"  className="my-5">
@@ -88,6 +98,7 @@ const HomePage = () => {
       </MDBCard>
 
     </MDBContainer>
+    // <></>
     );
     
 }
