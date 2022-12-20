@@ -105,7 +105,7 @@ const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
     )
 
     const renderMealItems = (mealId: string) => {
-      const menuNotAvailable = () => <h4>Menu not decided yet! :(</h4>
+      const menuNotAvailable = () => <div className={css({fontSize: '15px', fontWeight: '500'})}>Menu not decided yet! :(</div>
       const getMealItems = (mealId: string) => {
         let currentMealItems: Array<IFood> = [mockFoodItem]
         switch(mealId) {
