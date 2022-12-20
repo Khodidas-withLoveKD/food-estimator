@@ -18,4 +18,5 @@ public class ApiPathConstants {
     public static final String GET_ALL_FOOD_ITEMS_SORTED_BY_DATE_DESC = "/get-all-food-items-sorted-by-date-desc";
     public static final String GET_FOOD_ITEMS_BY_CATEGORY_SORTED_BY_DATE_DESC = "get-food-items-by-category-sorted-by-date-desc";
     public static final String ADD_FOOD = "/addFood";
+    public static final String GET_ADMIN_STATUS = "/{employee_id}/getAdminStatus";
 }

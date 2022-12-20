@@ -7,6 +7,7 @@ import { daysOfTheWeek, mealTimes } from "../constants/constants";
 import { IFood, ISelect } from "../constants/interfaces";
 import { themeColors } from "../shared/theme";
 import { employeeControllerUrl } from "./api";
+import { StarRating } from "baseui/rating";
 
 const mockFoodItem = {
     foodId: 0,
@@ -133,6 +134,19 @@ const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
       }
 
       const mealItems = getMealItems(mealId)
+      const getfoodRating = (foodRated:number, personsRated:number) => (
+        <div className={css({
+            display: 'flex',
+        })}>
+            <StarRating
+            numItems={5}
+            size={12}
+            value={foodRated}
+            />
+            <span>{foodRated} | {personsRated}</span>
+            </div>
+        );
+
       return (
         <div className={css({
           display: 'flex',
@@ -143,6 +157,7 @@ const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
             <MessageCard
               heading={food.name}
               paragraph={food.foodDescription}
+              buttonLabel={getfoodRating(food.rating, food.personsRated)}
               onClick={() => {}}
               image={{
                 src: food.imgUrl,

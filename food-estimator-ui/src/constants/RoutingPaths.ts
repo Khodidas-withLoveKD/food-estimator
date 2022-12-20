@@ -3,5 +3,6 @@ export const routingPath = {
   HEAD_COUNT: 'head-count',
   TOP_FOOD: 'top-food',
   SET_MENU: 'set-menu',
-  ADD_FOOD_ITEMS: 'add-food-items'
+  ADD_FOOD_ITEMS: 'add-food-items',
+  LOGIN:'login'
 }
