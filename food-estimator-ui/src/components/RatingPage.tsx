@@ -233,27 +233,6 @@ const RatingPage = () => {
                   isAscending ? <ArrowDown size={27} /> : <ArrowUp size={27}/>
               }
             </span>
-  
-        // <div className={css({
-        //     borderRadius: '16px',
-        //     alignItems: 'center',
-        //     paddingTop: '5px',
-        //     paddingBottom: '5px',
-        //     paddingLeft: '10px',
-        //     paddingRight: '10px',
-        //     cursor: 'pointer',
-        //     boxShadow: '0px 1.95px 2.6px rgba(0, 0, 0, 0.15)',
-        //     ':hover' : {
-        //         ...hoverItemCss
-        //       },    
-        //     })}
-
-        //   onClick={()=> setIsAscending(!isAscending)}
-        // >
-        //     {
-        //         isAscending ? <ArrowDown size={30} /> : <ArrowUp size={30}/>
-        //     }
-        // </div>
     )
 
     return (
