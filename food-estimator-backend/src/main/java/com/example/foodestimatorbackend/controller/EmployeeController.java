@@ -45,4 +45,9 @@ public class EmployeeController {
       return response;
   }
 
+  @GetMapping(value = ApiPathConstants.GET_ADMIN_STATUS)
+    public Response<HashMap<String,String>> getAdminStatus(@PathVariable(value = ApiPathConstants.EMPLOYEE_ID) int employee_id) {
+      Response<HashMap<String,String>> response = employeeService.getAdminStatus(employee_id);
+      return response;
+  }
 }

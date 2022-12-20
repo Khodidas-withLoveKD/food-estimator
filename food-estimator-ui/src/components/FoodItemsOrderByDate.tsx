@@ -4,10 +4,10 @@ import axios from 'axios';
 import { useStyletron } from "baseui";
 import {MessageCard, IMAGE_LAYOUT} from 'baseui/message-card';
 import { IFood, ISelect } from "../constants/interfaces";
-import { themeColors } from "../shared/theme";
 import * as React from "react";
 import { categories } from "../constants/constants";
 import { containerCss, hoverItemCss, rightPanelCss, selectedItemCss } from "../constants/commonCss";
+import { StarRating } from "baseui/rating";
 
 const baseUrl = 'http://localhost:10160/v1/food-estimator/'
 const adminControllerUrl = baseUrl + 'admin/'
@@ -103,7 +103,19 @@ const FoodItemsOrderByDate = () =>{
             const foodNotAvailable = () => <h4>food not added yet! :(</h4>
         
             const catogeryItems: Array<IFood> = foodItems
-                          
+            const getfoodRating = (foodRated:number, personsRated:number) => (
+              <div className={css({
+                  display: 'flex',
+              })}>
+                  <StarRating
+                  numItems={5}
+                  size={12}
+                  value={foodRated}
+                  />
+                  <span>{foodRated} | {personsRated}</span>
+                  </div>
+              );
+                               
             return (
                 <div className={css({
                   display: 'flex',
@@ -113,6 +125,7 @@ const FoodItemsOrderByDate = () =>{
                     <MessageCard
                       heading={food.name}
                       paragraph={food.foodDescription}
+                      buttonLabel={getfoodRating(food.rating, food.personsRated)}
                       onClick={() => {}}
                       image={{
                         src: food.imgUrl,

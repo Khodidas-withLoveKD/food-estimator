@@ -19,4 +19,6 @@ public interface EmployeeService {
 
     Response<HashMap<String, String>> getSelection(int employee_id);
 
+    Response<HashMap<String,String>> getAdminStatus(int employee_id);
+
 }

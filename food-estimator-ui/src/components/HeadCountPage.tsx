@@ -61,8 +61,6 @@ const headCountMap = new Map([
     return mealEnum;
   }
 
-  // mealToIsSelectedMap[meal.BREAKFAST]
-
   const calculateNewHeadCount = () => {
     const getHeadCountUrl = adminControllerUrl + 'getHeadCount'
      axios.get(getHeadCountUrl).then((response) => {
@@ -71,10 +69,6 @@ const headCountMap = new Map([
        const currentHeadCountMap = new Map(mealHeadCount)
        
        const daysFromResponse :Array<String> = []
-    //    Object.keys(headCountResponse).forEach(function(key){
-    //         daysFromResponse.push(headCountResponse[key]);
-
-    //    })
     for(const day in headCountResponse) {
         console.log("Key from response:",day)
         for(const mealType in headCountResponse[day]) {
@@ -83,7 +77,6 @@ const headCountMap = new Map([
 
             console.log("CurrentheadCount:",tempHeadCount)
             
-            // tempHeadCount[mealToHeadCountMap[mealStringToEnum[meal]] = headCountResponse[day][meal]
             tempHeadCount[mealToHeadCountMap[mealStringToEnum(mealType)]] = headCountResponse[day][mealType]
 
             console.log("NewTemp:",tempHeadCount)
@@ -103,22 +96,15 @@ const headCountMap = new Map([
     calculateNewHeadCount()
   }, [])
 
-//   useEffect(() => {
-//     console.log('kd INSIDE USEEFFECT')
-//     calculateNewHeadCount()
-//   },[])
-
   const heading = () => (
     <div className={css({
         paddingLeft: '100px',
         paddingRight: '100px',
-        // flexGrow: 0.4,  
         margin: 'auto',
         width: "500px"
     })}>
       <span className={css({
         fontSize: '40px',
-        // color: themeColors.menuFontColor,
       })}>
         HeadCount
       </span>
@@ -153,7 +139,6 @@ const headCountMap = new Map([
         paddingLeft: '100px',
         paddingRight: '100px',
         paddingBottom: '100px',
-        // flexGrow: 0.4,  
         margin: 'auto',
         width: "500px"
       })}>
@@ -168,16 +153,7 @@ const headCountMap = new Map([
                         backgroundColor: $theme.colors.warning200,
                         width: "100px"
                       })
-                //   style: {
-                //     width: '500px'
-                //   }
                 }
-                // TableBody: {
-                //   style: ({ $theme }) => ({
-                //     outline: `${$theme.colors.warning200} solid`,
-                //     backgroundColor: $theme.colors.warning200
-                //   })
-                // }
               }}        
             />
        </div>
@@ -189,8 +165,6 @@ const headCountMap = new Map([
       paddingLeft: '30px',
       paddingRight: '30px',
       paddingBottom: '20px',
-    //   flexGrow: 0.4,
-    //   backgroundColor: 'light blue',
       position: 'sticky', // TODO: make position sticky work
       top: '100px'
     })}>
