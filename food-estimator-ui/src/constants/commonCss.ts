@@ -1,6 +1,6 @@
 import { themeColors } from "../shared/theme";
 
-export const containerCss = {
+export const containerCss:any = {
   boxShadow: themeColors.boxShadow,
   border: themeColors.borderCss,
   borderRadius: themeColors.borderRadius,

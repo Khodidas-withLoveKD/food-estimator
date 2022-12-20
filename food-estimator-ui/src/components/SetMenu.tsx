@@ -200,10 +200,9 @@ const SetMenu = (props: ISetMenu) => {
     console.log('kd payload:', payload)
     const setMenuUrl = adminControllerUrl + 'editMenu'
     axios.post(setMenuUrl, {newMenu: payload}).then((response: any) => {
-      alert('menu added successfully')
-      // on success call setMenuof the week
       incrementMenuOfTheWeekCount((menuOfTheWeekCount:number) => menuOfTheWeekCount + 1)
       setSelectedDayOfMenu(selectedDay[0].id)
+      alert('Menu added successfully')
     })
   }
 

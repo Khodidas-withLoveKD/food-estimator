@@ -9,7 +9,8 @@ import * as React from "react";
 import { StarRating } from "baseui/rating";
 import { categories } from "../constants/constants";
 import {  ArrowUp,ArrowDown} from "baseui/icon";
-import { containerCss, hoverItemCss, selectedItemCss } from "../constants/commonCss";
+import { containerCss, hoverItemCss, layoutCss, leftPanelCss, rightPanelCss, selectedItemCss } from "../constants/commonCss";
+import { Button, SIZE } from "baseui/button";
 
 const baseUrl = 'http://localhost:10160/v1/food-estimator/'
 const adminControllerUrl = baseUrl + 'admin/'
@@ -51,11 +52,12 @@ const RatingPage = () => {
   const [others, setOthers] = useState<Array<IFood>>([mockFoodItem1,mockFoodItem0])
   const [all, setAll] = useState<Array<IFood>>([mockFoodItem1,mockFoodItem0])
   const [selectedCatogery, setSelectedCatogery] = useState<string>(category.ALL)
-  const [foodRating, setFoodRating] = useState<number>(4)
+  const [foodRating, setFoodRating] = useState<number>()
   const [foodItems,setFoodItems] = useState<Array<IFood>>([mockFoodItem0])
   const [isAscending,setIsAscending] = useState<boolean>(false)
-
-  console.log('kd selectedCategory ', selectedCatogery)
+  const [currentlySelectedFood, setCurrentFood] = useState<IFood>()
+  
+  console.log('kd foodRating:', foodRating)
   useEffect(() => {
 
     let url:string = ratingUrlAll
@@ -122,7 +124,7 @@ const RatingPage = () => {
 
   const renderFoodAsPerCatogery = () => {
 
-    const renderCatogeryItems = (catogeryId:string) =>{
+    const renderCatogeryItems = () =>{
         const foodNotAvailable = () => <h4>food not added yet! :(</h4>
     
         const catogeryItems: Array<IFood> = foodItems
@@ -148,13 +150,17 @@ const RatingPage = () => {
             <div className={css({
               display: 'flex',
               flexWrap: 'wrap',
+              position: 'relative'
             })}>
               {catogeryItems.length ? catogeryItems.map((food: IFood) =>          
                 <MessageCard
                   heading={food.name}
                   paragraph="Pellentesque velit purus, luctus non lorem in, rutrum ultricies quam."
                   buttonLabel={getfoodRating(food.rating, food.personsRated)}
-                  onClick={() => {}}
+                  onClick={() => {
+                    setFoodRating(0)
+                    setCurrentFood(food)
+                  }}
                   image={{
                     src: food.imgUrl,
                     layout: IMAGE_LAYOUT.top,
@@ -163,7 +169,7 @@ const RatingPage = () => {
                   }}
                   // backgroundColor={colors.teal200}
                   overrides={{
-                    Root: {style: {marginBottom: '20px', marginRight: '25px', minWidth: '100px', width: '300px', cursor: 'default'}},
+                    Root: {style: {marginBottom: '20px', marginRight: '25px', minWidth: '100px', width: '300px'}},
                     HeadingContainer: {style: {fontSize: '17px'}}
                   }
                 }
@@ -171,15 +177,15 @@ const RatingPage = () => {
               ) : foodNotAvailable()}
             </div>
           )
+      }
     
-    }
 
     return (
         <div>
             <div className={css({
               padding: '20px'
             })}>
-              {renderCatogeryItems(selectedCatogery)}
+              {renderCatogeryItems()}
             </div>
         </div>
       )
@@ -263,14 +269,108 @@ const RatingPage = () => {
     </h2>
   )
 
-  return (
+  const rightPanel = () => (
     <div className={css({
-      margin: 'auto',
-      width: '90%',
+      ...containerCss,
+      ...rightPanelCss,
     })}>
-      {heading()}
-      {renderCatogeriesOfTheFood()}
-      {renderFoodAsPerCatogery()}
+    {heading()}
+    {renderCatogeriesOfTheFood()}
+    {renderFoodAsPerCatogery()}
+    </div>
+  )
+
+
+  const leftPanel = () => {
+    const heading = () => (
+      <h3 className={css({
+        textDecoration: 'underline',
+        textAlign: 'center',
+      })}>
+        Rate Food
+      </h3>
+    )
+    const noFoodItemSelected = () => <h5>No Food Item Selected</h5>
+
+    const submitCurrentFoodRating = () => {
+
+    }
+
+    const ratingSection = () => (
+      <div className={css({
+        display: 'flex',
+        alignItems: 'center',
+        backgroundColor: '#E5E5E5',
+        borderRadius: '16px',
+        paddingTop: '5px',
+        paddingBottom: '5px',
+        paddingRight: '10px',
+        paddingLeft: '10px'
+      })}>
+        
+        <StarRating
+        numItems={5}
+        size={18}
+        value={foodRating ? foodRating : currentlySelectedFood?.rating}
+        onChange={foodRating => setFoodRating(Number(foodRating.value))}
+        />
+        <span className={css({
+          marginLeft: '15px',
+          fontSize: '17px',
+          fontWeight: 500,
+        })}>{foodRating ? foodRating : currentlySelectedFood?.rating}</span>
+      </div>
+    )
+    const submitFoodRating = () => (
+      <div className={css({
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-end'
+      })}>
+        <MessageCard
+          heading={currentlySelectedFood?.name}
+          paragraph={currentlySelectedFood?.foodDescription}
+          onClick={() => {}}
+          image={{
+            src: currentlySelectedFood?.imgUrl ?? '',
+            layout: IMAGE_LAYOUT.top,
+            ariaLabel:
+              'A woman hiking through a valley with a yellow backpack',
+          }}
+          overrides={{
+            Root: {style: {marginBottom: '20px', minWidth: '100px', width: '300px', cursor: 'default'}},
+            HeadingContainer: {style: {fontSize: '17px'}}
+          }
+        }
+        />
+        {ratingSection()}
+        <div className={css({
+          float: 'right',
+          marginTop: '15px'
+        })}>
+          <Button size={SIZE.compact} onClick={() => submitCurrentFoodRating()}>Submit</Button>
+        </div>
+      </div>
+    )
+
+    return (
+      <div className={css({
+        ...containerCss,
+        ...leftPanelCss,
+        width: '300px'
+      })}>
+        {heading()}
+        {currentlySelectedFood ? submitFoodRating() : noFoodItemSelected()}
+      </div>
+    )
+  }
+
+  return (
+    <div className={css(
+      layoutCss
+    )}>
+      {leftPanel()}
+      {rightPanel()}
     </div>
   )
 }
