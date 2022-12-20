@@ -65,6 +65,7 @@ const FoodItemsOrderByDate = () =>{
         }
     
         axios.get(url).then((response) => {
+            console.log("ResponseObjectRating:",response.data.responseObject)
             setFoodItems(response.data.responseObject)
          
             switch(selectedCatogery) {
@@ -112,8 +113,12 @@ const FoodItemsOrderByDate = () =>{
                   size={12}
                   value={foodRated}
                   />
-                  <span>{foodRated} | {personsRated}</span>
-                  </div>
+                <div className={css({
+                    display:'flex',
+                    justifyContent:'space-evenly',
+                    paddingLeft:'10px'
+                })}><span>{foodRated} | {personsRated}</span></div>
+                </div>
               );
                                
             return (

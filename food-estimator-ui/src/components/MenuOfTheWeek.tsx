@@ -134,8 +134,12 @@ const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
             size={12}
             value={foodRated}
             />
-            <span>{foodRated} | {personsRated}</span>
-            </div>
+                <div className={css({
+                    display:'flex',
+                    justifyContent:'space-evenly',
+                    paddingLeft:'10px'
+                })}><span>{foodRated} | {personsRated}</span></div>
+                </div>
         );
 
       return (

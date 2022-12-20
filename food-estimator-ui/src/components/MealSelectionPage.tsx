@@ -28,8 +28,10 @@ const MealSelectionPage = () => {
     [meal.DINNER]: 2
   }
 
+  const employee_id = parseInt(localStorage.employee_id)
+
   useEffect(() => {
-    const getMenuSelectionUrl = employeeBaseUrl + `${employeeId}/getSelection`
+    const getMenuSelectionUrl = employeeBaseUrl + `${employee_id}/getSelection`
     axios.get(getMenuSelectionUrl).then((response) => {
       const selectedMealsResponse = response.data.responseObject
       const currentSelectedMealMap = new Map(selectedMeal)
@@ -146,7 +148,7 @@ const MealSelectionPage = () => {
       return {selectedOptions: payload}
     }
 
-    const postMenuSelectionUrl = employeeBaseUrl + `${employeeId}/selection`
+    const postMenuSelectionUrl = employeeBaseUrl + `${employee_id}/selection`
     axios.post(postMenuSelectionUrl, generatePayload()).then((response: any) => {
       // TODO: create Toaster
       alert('Preference saved :)')

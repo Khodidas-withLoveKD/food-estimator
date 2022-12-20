@@ -136,7 +136,11 @@ const RatingPage = () => {
                 size={12}
                 value={foodRated}
                 />
-                <span>{foodRated} | {personsRated}</span>
+                <div className={css({
+                    display:'flex',
+                    justifyContent:'space-evenly',
+                    paddingLeft:'10px'
+                })}><span>{foodRated} | {personsRated}</span></div>
                 </div>
             );
           
@@ -209,15 +213,26 @@ const RatingPage = () => {
     
     const orderArrow =() =>(
 
-        <div className={css({
-            cursor:'pointer'
-          })}
-          onClick={()=> setIsAscending(!isAscending)}
-        >
-            {
-                isAscending ? <ArrowDown size={30} /> : <ArrowUp size={30}/>
+        <span className={css({
+            borderRadius: '16px',
+            alignItems: 'center',
+            paddingTop: '5px',
+            paddingBottom: '5px',
+            paddingLeft: '10px',
+            paddingRight: '10px',
+            cursor: 'pointer',
+            display:'flex',
+            boxShadow: '0px 1.95px 2.6px rgba(0, 0, 0, 0.15)',
+            ':hover' : {
+              ...hoverItemCss
             }
-        </div>
+          })}  
+          onClick={()=> setIsAscending(!isAscending)}
+          >Sort
+              {
+                  isAscending ? <ArrowDown size={27} /> : <ArrowUp size={27}/>
+              }
+            </span>
     )
 
     return (
