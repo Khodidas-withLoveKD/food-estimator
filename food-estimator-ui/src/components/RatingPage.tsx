@@ -165,7 +165,6 @@ const RatingPage = () => {
                     ariaLabel:
                       'A woman hiking through a valley with a yellow backpack',
                   }}
-                  // backgroundColor={colors.teal200}
                   overrides={{
                     Root: {style: {marginBottom: '20px', marginRight: '25px', minWidth: '100px', width: '300px'}},
                     HeadingContainer: {style: {fontSize: '17px'}}
@@ -294,6 +293,7 @@ const RatingPage = () => {
       const submitFoodRatingUrl:string  = adminControllerUrl + `${currentlySelectedFood?.foodId}/update-food-rating?rating=${foodRating}`
       
       axios.post(submitFoodRatingUrl).then((response) => {
+        alert('Rating submitted successfully')
         incrementFoodItemsByRatingApiCount(getFoodItemsByRatingApiCount + 1)
       })
     }
