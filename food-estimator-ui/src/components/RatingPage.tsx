@@ -56,11 +56,13 @@ const RatingPage = () => {
   const [foodItems,setFoodItems] = useState<Array<IFood>>([mockFoodItem0])
   const [isAscending,setIsAscending] = useState<boolean>(false)
   const [currentlySelectedFood, setCurrentFood] = useState<IFood>()
-  
+  const [getFoodItemsByRatingApiCount, incrementFoodItemsByRatingApiCount] = useState<number>(0)
+
   console.log('kd foodRating:', foodRating)
   useEffect(() => {
 
     let url:string = ratingUrlAll
+    console.log('kd ratingUrlAll:', ratingUrlAll)
 
     switch(selectedCatogery) {
         case category.ALL:
@@ -88,7 +90,6 @@ const RatingPage = () => {
     }
 
     axios.get(url).then((response) => {
-        console.log("ResponseObjectRating:",response.data.responseObject)
         setFoodItems(response.data.responseObject)
      
         switch(selectedCatogery) {
@@ -120,7 +121,7 @@ const RatingPage = () => {
     })    
 
     
-  }, [selectedCatogery,isAscending])
+  }, [selectedCatogery, isAscending, getFoodItemsByRatingApiCount])
 
   const renderFoodAsPerCatogery = () => {
 
@@ -290,10 +291,14 @@ const RatingPage = () => {
         Rate Food
       </h3>
     )
-    const noFoodItemSelected = () => <h5>No Food Item Selected</h5>
+    const noFoodItemSelected = () => <div><h5>No Food Item Selected</h5><h5>Click on Food Card to rate it :)</h5></div>
 
     const submitCurrentFoodRating = () => {
-
+      const submitFoodRatingUrl:string  = adminControllerUrl + `${currentlySelectedFood?.foodId}/update-food-rating?rating=${foodRating}`
+      
+      axios.post(submitFoodRatingUrl).then((response) => {
+        incrementFoodItemsByRatingApiCount(getFoodItemsByRatingApiCount + 1)
+      })
     }
 
     const ratingSection = () => (
