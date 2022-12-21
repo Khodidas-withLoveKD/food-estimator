@@ -1,6 +1,7 @@
 import { useStyletron} from 'baseui';
 import axios from 'axios';
 import { Table, SIZE } from "baseui/table-semantic";
+import { themeColors } from '../shared/theme';
 
 
 import { useEffect, useState } from 'react';
@@ -8,6 +9,7 @@ import { employeeBaseUrl, daysOfTheWeek, mealTimes } from '../constants/constant
 import { ISelect } from '../constants/interfaces';
 import { day, meal } from '../constants/Enums';
 import { arrayBuffer } from 'stream/consumers';
+import { containerCss, leftPanelCss } from '../constants/commonCss';
 
 
  
@@ -21,7 +23,6 @@ const headCountMap = new Map([
     [day.THURS, [0, 0, 0]],
     [day.FRI, [0, 0, 0]],
   ])
-
 
   const HeadCountPage = () => {
   const [css, theme] = useStyletron()
@@ -98,15 +99,17 @@ const headCountMap = new Map([
 
   const heading = () => (
     <div className={css({
-        paddingLeft: '100px',
-        paddingRight: '100px',
+        paddingBottom:'20px',
+        display:'flex',
+        justifyContent:'space-around',
         margin: 'auto',
-        width: "500px"
+        width: "auto"
     })}>
       <span className={css({
         fontSize: '40px',
+        textDecoration: 'underline'
       })}>
-        HeadCount
+        Head-Count
       </span>
     </div>
   )
@@ -134,16 +137,125 @@ const headCountMap = new Map([
         return headCountData;
 
     }
+
+
+    const renderMeals = () => {
+        const renderEachMeal = () => {
+          return mealTimes.map((meal: ISelect) => 
+            <span className={css({
+              borderWidth: '2px',
+              borderRadius: '16px',
+              paddingTop: '5px',
+              paddingBottom: '5px',
+              paddingLeft: '80px',
+              paddingRight: '40px',
+              justifyContent:'space-around'
+            })}>
+              {meal.label}
+            </span>
+          )
+        }
+
+        return (
+            <div className={css({
+            })}>
+              {renderEachMeal()}
+            </div>
+          )
+  
+    }
+
+    const headers = () =>{
+
+        return(
+            <div className = {css({
+                paddingBottom:'40px',
+                justifyContent:'space-evenly',
+                width: "auto",
+                display:'flex'
+              })}>
+                {renderMeals()}
+                </div>
+            )
+
+    }
+
+    const renderDayAndCount = (day: ISelect) =>{
+        
+        const dayOfTheWeek = (day: ISelect) => (
+            <span className={css({
+              width: '45px',
+              fontWeight: 700,
+            })}>
+              {day.label}
+            </span>
+          ) 
+        
+
+        const countOfDay=(day:ISelect) =>{
+            
+            const headCountOfTheDay: Array<Number> = mealHeadCount.get(day.id) ?? []
+            
+            const getCountOfDay=(meal:ISelect) =>{
+                
+                switch(meal.label) {
+                    case('Breakfast'):
+                        return headCountOfTheDay[mealToHeadCountMap.BREAKFAST]
+                    case('Lunch'):
+                        return headCountOfTheDay[mealToHeadCountMap.LUNCH]
+                    default:
+                        return headCountOfTheDay[mealToHeadCountMap.DINNER]
+                }
+            }
+
+            return mealTimes.map((meal: ISelect) => 
+            <span className={css({
+                borderWidth: '2px',
+                borderRadius: '16px',
+                width: 'min-content',
+                paddingTop: '5px',
+                paddingBottom: '5px',
+                paddingLeft: '100px',
+                paddingRight: '40px',
+              })}>
+              {getCountOfDay(meal).toString()}
+            </span>
+          )
+        }
+
+        return (
+            <div className={css({
+                paddingBottom:'40px',
+                justifyContent:'space-evenly',
+                width: "auto",
+                display:'flex'
+                    })}>
+              {dayOfTheWeek(day)}:{countOfDay(day)}
+            </div>
+          )
+        }
+
+
     return (
-      <div className = {css({
-        paddingLeft: '100px',
-        paddingRight: '100px',
-        paddingBottom: '100px',
-        margin: 'auto',
-        width: "500px"
-      })}>
-           <Table
-            columns = {mealTimeLables}
+      
+      <><div id="1" className={css({
+            paddingBottom: '20px',
+            display: 'flex',
+            paddingLeft: '500px',
+        })}>
+            {headers()}
+        </div>
+        <div id="2" className={css({
+            paddingBottom: '100px',
+            paddingRight:'450px',
+            paddingLeft:'400px'
+        })}>
+                {daysOfTheWeek.map((day: ISelect) => renderDayAndCount(day)
+                )}
+            </div>
+            </>
+    )
+           {/* <Table
             data = {createData()}
             size={SIZE.compact}
             overrides={{
@@ -155,22 +267,30 @@ const headCountMap = new Map([
                       })
                 }
               }}        
-            />
-       </div>
-    )
+            /> */}
+    //)
 }
-  return (
+//   return (
+//     <div className={css({
+//       paddingTop: '20px',
+//       paddingLeft: '30px',
+//       paddingRight: '30px',
+//       paddingBottom: '20px',
+//       position: 'sticky', // TODO: make position sticky work
+//       top: '100px'
+//     })}>
+//       {heading()}
+//       {headCount()}
+//     </div>
+ // )
+ return (
     <div className={css({
-      paddingTop: '20px',
-      paddingLeft: '30px',
-      paddingRight: '30px',
-      paddingBottom: '20px',
-      position: 'sticky', // TODO: make position sticky work
-      top: '100px'
+      ...containerCss
     })}>
       {heading()}
       {headCount()}
     </div>
   )
+
 }
 export default HeadCountPage ;
