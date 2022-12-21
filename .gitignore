@@ -26,3 +26,4 @@ node_modules
 
 *.jpg
 *.txt
+.DS_Store
