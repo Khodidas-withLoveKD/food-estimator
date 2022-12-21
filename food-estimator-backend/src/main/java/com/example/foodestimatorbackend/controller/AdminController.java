@@ -75,4 +75,9 @@ public class AdminController {
     public Response<List<Food>> getFoodItemsByCategorySortedByDateDesc(@RequestParam Category category) {
         return adminService.getFoodByCategorySortedByDateDesc(category);
     }
+
+    @PostMapping(value = ApiPathConstants.UPDATE_FOOD_RATING)
+    public Response<String> updateFoodRating(@PathVariable(value = "food_id") Integer foodId, @RequestParam Float rating) {
+        return adminService.updateFoodRating(foodId, rating);
+    }
 }

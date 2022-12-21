@@ -191,4 +191,22 @@ public class AdminServiceImpl implements AdminService {
         response.setResponseObject(foodRepository.findByCategoryOrderByCreatedAtDesc(category));
         return response;
     }
+    @Override
+    public Response<String> updateFoodRating(Integer foodId, Float newRating) {
+        Response<String> response = new Response<>();
+
+        Optional<Food> food = foodRepository.findById(foodId);
+        if (food.isPresent()) {
+            Float oldRating = food.get().getRating();
+            Integer currentPersonsRated = food.get().getPersonsRated();
+
+            Float newCalculatedRating = ((oldRating * currentPersonsRated) + newRating) / (currentPersonsRated + 1);
+            food.get().setRating(newCalculatedRating);
+            food.get().setPersonsRated(currentPersonsRated + 1);
+
+            foodRepository.save(food.get());
+            response.setResponseObject("Rating updated successfully");
+        }
+        return response;
+    }
 }
