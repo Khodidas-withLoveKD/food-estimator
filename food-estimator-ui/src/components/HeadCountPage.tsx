@@ -1,15 +1,13 @@
 import { useStyletron} from 'baseui';
 import axios from 'axios';
-import { Table, SIZE } from "baseui/table-semantic";
 import { themeColors } from '../shared/theme';
 
 
 import { useEffect, useState } from 'react';
-import { employeeBaseUrl, daysOfTheWeek, mealTimes } from '../constants/constants';
+import { daysOfTheWeek, mealTimes } from '../constants/constants';
 import { ISelect } from '../constants/interfaces';
 import { day, meal } from '../constants/Enums';
-import { arrayBuffer } from 'stream/consumers';
-import { containerCss, leftPanelCss } from '../constants/commonCss';
+import { containerCss } from '../constants/commonCss';
 
 
  
@@ -99,18 +97,13 @@ const headCountMap = new Map([
 
   const heading = () => (
     <div className={css({
-        paddingBottom:'20px',
-        display:'flex',
-        justifyContent:'space-around',
-        margin: 'auto',
-        width: "auto"
+        marginBottom:'40px',
     })}>
-      <span className={css({
-        fontSize: '40px',
-        textDecoration: 'underline'
+      <h1 className={css({
+        textDecoration: 'underline',
       })}>
         Head-Count
-      </span>
+      </h1>
     </div>
   )
 
@@ -119,45 +112,29 @@ const headCountMap = new Map([
     mealTimeLables.push("day")
     mealTimes.map((meal:ISelect)=> mealTimeLables.push(meal.label))
 
-    const createData = () => {
-        const headCountData: string[][] = []
-
-        daysOfTheWeek.map((day:ISelect)=>{
-            const headCountDayWise = []
-            const headCountOfTheDay: Array<Number> = mealHeadCount.get(day.id) ?? []
-            headCountDayWise.push(day.label)
-            
-            console.log("HeadCount of the day:",headCountOfTheDay)
-            mealTimes.forEach(meal=> { console.log("meal_id:",meal.id) ;headCountDayWise.push(headCountOfTheDay[mealToHeadCountMap[meal.id]])})
-            
-            headCountData.push(headCountDayWise)
-            console.log("Day Wise HeadCount:",headCountDayWise)
-        })
-        
-        return headCountData;
-
-    }
-
 
     const renderMeals = () => {
-        const renderEachMeal = () => {
-          return mealTimes.map((meal: ISelect) => 
+        const renderEachMeal = () => 
+           mealTimes.map((meal: ISelect) => 
             <span className={css({
-              borderWidth: '2px',
               borderRadius: '16px',
               paddingTop: '5px',
               paddingBottom: '5px',
-              paddingLeft: '80px',
-              paddingRight: '40px',
-              justifyContent:'space-around'
+              paddingLeft: '10px',
+              paddingRight: '10px',
+              boxShadow: '0px 1.95px 2.6px rgba(0, 0, 0, 0.15)',
+              marginLeft: '20px',
+              backgroundColor: themeColors.selectedBgColor
             })}>
               {meal.label}
             </span>
           )
-        }
 
         return (
             <div className={css({
+              display: 'flex',
+              // justifyContent: 'space-evenly',
+              marginLeft: '60px'
             })}>
               {renderEachMeal()}
             </div>
@@ -165,29 +142,25 @@ const headCountMap = new Map([
   
     }
 
-    const headers = () =>{
-
-        return(
-            <div className = {css({
-                paddingBottom:'40px',
-                justifyContent:'space-evenly',
-                width: "auto",
-                display:'flex'
-              })}>
-                {renderMeals()}
-                </div>
-            )
-
-    }
+    const headers = () =>
+    (
+      <div className = {css({
+          marginBottom:'20px',
+        })}>
+          {renderMeals()}
+          </div>
+      )
 
     const renderDayAndCount = (day: ISelect) =>{
         
         const dayOfTheWeek = (day: ISelect) => (
             <span className={css({
-              width: '45px',
+              width: '60px',
               fontWeight: 700,
+              // marginRight: '200px'
+              // display: 'flex'
             })}>
-              {day.label}
+              {day.label}  :
             </span>
           ) 
         
@@ -210,13 +183,10 @@ const headCountMap = new Map([
 
             return mealTimes.map((meal: ISelect) => 
             <span className={css({
-                borderWidth: '2px',
-                borderRadius: '16px',
-                width: 'min-content',
-                paddingTop: '5px',
-                paddingBottom: '5px',
-                paddingLeft: '100px',
-                paddingRight: '40px',
+                marginTop: '5px',
+                // marginBottom: '5px',
+                marginRight: '20px',
+                marginLeft: '63px'
               })}>
               {getCountOfDay(meal).toString()}
             </span>
@@ -225,67 +195,40 @@ const headCountMap = new Map([
 
         return (
             <div className={css({
-                paddingBottom:'40px',
-                justifyContent:'space-evenly',
-                width: "auto",
-                display:'flex'
-                    })}>
-              {dayOfTheWeek(day)}:{countOfDay(day)}
+              marginBottom:'20px',
+              // justifyContent:'space-between',
+              alignItems: 'center',
+              width: "auto",
+              display:'flex'
+            })}>
+              {dayOfTheWeek(day)}{countOfDay(day)}
             </div>
           )
         }
 
 
     return (
-      
-      <><div id="1" className={css({
-            paddingBottom: '20px',
-            display: 'flex',
-            paddingLeft: '500px',
-        })}>
-            {headers()}
+      <>
+      <div id="1">
+        {headers()}
+      </div>
+      <div id="2" className={css({
+      })}>
+          {daysOfTheWeek.map((day: ISelect) => renderDayAndCount(day)
+          )}
         </div>
-        <div id="2" className={css({
-            paddingBottom: '100px',
-            paddingRight:'450px',
-            paddingLeft:'400px'
-        })}>
-                {daysOfTheWeek.map((day: ISelect) => renderDayAndCount(day)
-                )}
-            </div>
-            </>
+      </>
     )
-           {/* <Table
-            data = {createData()}
-            size={SIZE.compact}
-            overrides={{
-                Table: {
-                    style: ({ $theme }) => ({
-                        outline: `${$theme.colors.warning200} solid`,
-                        backgroundColor: $theme.colors.warning200,
-                        width: "100px"
-                      })
                 }
-              }}        
-            /> */}
-    //)
-}
-//   return (
-//     <div className={css({
-//       paddingTop: '20px',
-//       paddingLeft: '30px',
-//       paddingRight: '30px',
-//       paddingBottom: '20px',
-//       position: 'sticky', // TODO: make position sticky work
-//       top: '100px'
-//     })}>
-//       {heading()}
-//       {headCount()}
-//     </div>
- // )
  return (
     <div className={css({
-      ...containerCss
+      ...containerCss,
+      margin:'auto',
+      width: '400px',
+      marginTop: '20px',
+      paddingLeft: '100px',
+      paddingRight: '50px',
+      paddingBottom: '50px',
     })}>
       {heading()}
       {headCount()}
