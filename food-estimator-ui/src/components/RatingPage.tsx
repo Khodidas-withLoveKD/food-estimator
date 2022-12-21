@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useStyletron } from "baseui";
 import {MessageCard, IMAGE_LAYOUT} from 'baseui/message-card';
 import { ISelect, IFood } from "../constants/interfaces";
-import { themeColors } from "../shared/theme";
 import * as React from "react";
 import { StarRating } from "baseui/rating";
 import { categories } from "../constants/constants";
@@ -58,11 +57,9 @@ const RatingPage = () => {
   const [currentlySelectedFood, setCurrentFood] = useState<IFood>()
   const [getFoodItemsByRatingApiCount, incrementFoodItemsByRatingApiCount] = useState<number>(0)
 
-  console.log('kd foodRating:', foodRating)
   useEffect(() => {
 
     let url:string = ratingUrlAll
-    console.log('kd ratingUrlAll:', ratingUrlAll)
 
     switch(selectedCatogery) {
         case category.ALL:
@@ -156,8 +153,8 @@ const RatingPage = () => {
               {catogeryItems.length ? catogeryItems.map((food: IFood) =>          
                 <MessageCard
                   heading={food.name}
-                  paragraph="Pellentesque velit purus, luctus non lorem in, rutrum ultricies quam."
-                  buttonLabel={getfoodRating(food.rating, food.personsRated)}
+                  paragraph={food.foodDescription}
+                  buttonLabel={getfoodRating(parseFloat(food.rating.toFixed(1)), food.personsRated)}
                   onClick={() => {
                     setFoodRating(0)
                     setCurrentFood(food)
@@ -323,7 +320,7 @@ const RatingPage = () => {
           marginLeft: '15px',
           fontSize: '17px',
           fontWeight: 500,
-        })}>{foodRating ? foodRating : currentlySelectedFood?.rating}</span>
+        })}>{foodRating ? foodRating : parseFloat(currentlySelectedFood?.rating.toFixed(1) ?? '1.2')}</span>
       </div>
     )
     const submitFoodRating = () => (

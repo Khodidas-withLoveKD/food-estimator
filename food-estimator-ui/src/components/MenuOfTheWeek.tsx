@@ -151,7 +151,7 @@ const MenuOfTheWeek = (props: IMenuOfTheWeek) => {
             <MessageCard
               heading={food.name}
               paragraph={food.foodDescription}
-              buttonLabel={getfoodRating(food.rating, food.personsRated)}
+              buttonLabel={getfoodRating(parseFloat(food.rating.toFixed(1)), food.personsRated)}
               onClick={() => {}}
               image={{
                 src: food.imgUrl,
